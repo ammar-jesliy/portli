@@ -42,10 +42,30 @@ module.exports = {
     ],
   },
   theme: {
+    fontSize: {
+      'tiny': '10px',
+      'xs': '12px',
+      'sm': '14px',
+      'base': '18px',
+      'md': '20px',
+      'lg': '24px',
+      'xl': '33px',
+      '2xl': '44px',
+      '3xl': '58px',
+      '4xl': '75px',
+      '5xl': '98px',
+      '6xl': '128px',
+    },
     extend: {
       fontFamily: {
         bricolage: ["var(--font-bricolage)", "sans-serif"],
         poppins: ["var(--font-poppins)", "serif"],
+      },
+      colors: {
+        primaryLightBlue: "#21AFFF",
+        primaryBlue: "#2B0DE9",
+        primaryPurple: "#AC59FF",
+        primaryTextDarkBlue: "#0A004D",
       },
     },
   },

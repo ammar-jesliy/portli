@@ -26,9 +26,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" data-theme="light">
         <body
-          className={`${poppins.variable} ${bricolage.variable} min-h-screen`}
+          className={`${poppins.variable} ${bricolage.variable}`}
         >
           {children}
           <ToastContainer />
