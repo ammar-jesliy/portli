@@ -1,39 +1,47 @@
 "use client";
 
 import { useUser, UserButton } from "@clerk/nextjs";
-import { db } from "../../utils";
-import { eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { userInfo } from "../../utils/schema";
+import { useContext, useEffect } from "react";
+import { AdminContext } from "../_context/AdminContext";
+import SiteContent from "./_components/SiteContent";
 
 const admin = () => {
   const { user } = useUser();
   const router = useRouter();
+
+  const { displayMode, userDetails } = useContext(AdminContext);
 
   useEffect(() => {
     user && checkUser();
   }, [user]);
 
   const checkUser = async () => {
-    const result = await db
-      .select()
-      .from(userInfo)
-      .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
-
-    if (result.length === 0) {
+    if (userDetails === 0) {
       router.replace("/create");
     }
   };
 
   return (
     <div>
-      <h1>Admin page</h1>
-      <p>{user?.primaryEmailAddress.emailAddress}</p>
-      <p>{user?.fullName}</p>
-      <div className="">
-        <UserButton />
-      </div>
+      {displayMode === "desktop" ? (
+        <div 
+          className="min-h-screen w-screen"
+          data-theme="light"
+        >
+          <SiteContent />
+        </div>
+      ) : (
+        <div className="flex justify-center bg-base-200 min-h-screen">
+          <div 
+            className="w-[400px] h-[80vh] mt-[5vh] border-4 bg-base border-black rounded-3xl"
+            data-theme="light"
+          >
+            <SiteContent />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

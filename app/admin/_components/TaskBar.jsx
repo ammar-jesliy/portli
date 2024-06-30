@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -16,12 +16,15 @@ import {
 } from "lucide-react";
 import Themes from "./Themes";
 import Items from "./Items";
+import { AdminContext } from "../../_context/AdminContext";
 
 const TaskBar = () => {
   const [showItems, setShowItems] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  const {displayMode, setDisplayMode} = useContext(AdminContext);
 
   const isActive = (path) => {
     return pathname === path;
@@ -35,11 +38,18 @@ const TaskBar = () => {
 
       {pathname === "/admin" ? (
         <>
-          <div className="hidden sm:flex">
-            <button className="btn btn-sm btn-ghost">
+          <div className="hidden sm:flex gap-1">
+            <button 
+              className={`btn btn-sm ${displayMode === "desktop" ? `btn-neutral` : `btn-ghost`}`}
+              onClick={() => setDisplayMode("desktop")}
+            >
               <Monitor size={20} />
             </button>
-            <button className="btn btn-sm btn-ghost">
+
+            <button 
+              className={`btn btn-sm ${displayMode === "mobile" ? `btn-neutral` : `btn-ghost`}`}
+              onClick={() => setDisplayMode("mobile")}
+            >
               <Smartphone size={20} />
             </button>
           </div>

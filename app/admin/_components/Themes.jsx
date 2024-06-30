@@ -3,7 +3,7 @@ import themes from "../../../app/_data/themeData";
 
 const Themes = () => {
   return (
-    <div className="absolute grid grid-cols-2 sm:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 animate-slide-up z-[-10]">
+    <div className="absolute grid grid-cols-2 sm:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 animate-slide-up z-[-1]">
       {themes.map((theme, index) => (
         <button key={index} className="btn btn-ghost px-1">
           <div className="flex sm:gap-1 gap-[2px]">

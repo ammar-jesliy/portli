@@ -1,13 +1,16 @@
 import React from "react";
 import TaskBar from "./_components/TaskBar";
+import AdminProvider from "./Provider";
 
 
 const layout = ({ children }) => {
 
   return (
     <main>
-      {children}
-      <TaskBar />
+      <AdminProvider>
+        {children}
+        <TaskBar />
+      </AdminProvider>
     </main>
   );
 };
