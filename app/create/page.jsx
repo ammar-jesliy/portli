@@ -1,9 +1,10 @@
 "use client"
 
-import { useState} from "react";
+import { useState, useEffect} from "react";
 import { ArrowRight } from 'lucide-react';
 import { toast } from "react-toastify";
 import { db } from "../../utils";
+import { eq } from "drizzle-orm";
 import { userInfo } from "../../utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,21 @@ const createPage = () => {
   const router = useRouter();
   const { user } = useUser();
   const [sitename, setSitename] = useState('');
+
+  useEffect(() => {
+    user && checkUser();
+  }, [user]);
+
+  const checkUser = async () => {
+    const result = await db
+      .select()
+      .from(userInfo)
+      .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
+
+    if (result.length > 0) {
+      router.replace("/admin");
+    }
+  };
 
   const checkValidUsername = (sitename) => {
     const allowedChars = /^[a-zA-Z0-9-_]+$/;

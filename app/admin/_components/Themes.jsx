@@ -1,0 +1,34 @@
+import React from "react";
+import themes from "../../../app/_data/themeData";
+
+const Themes = () => {
+  return (
+    <div className="absolute grid grid-cols-2 sm:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 animate-slide-up z-[-10]">
+      {themes.map((theme, index) => (
+        <button key={index} className="btn btn-ghost px-1">
+          <div className="flex sm:gap-1 gap-[2px]">
+            <div
+              className="w-2 h-6 rounded-full border-[0.5px] border-base-content"
+              style={{ backgroundColor: theme.primary }}
+            ></div>
+            <div
+              className="w-2 h-6 rounded-full border-[0.5px] border-base-content"
+              style={{ backgroundColor: theme.secondary }}
+            ></div>
+            <div
+              className="w-2 h-6 rounded-full border-[0.5px] border-base-content"
+              style={{ backgroundColor: theme.accent }}
+            ></div>
+            <div
+              className="w-2 h-6 rounded-full border-[0.5px] border-base-content"
+              style={{ backgroundColor: theme["base-100"] }}
+            ></div>
+          </div>
+          <p className="w-[55px] text-left">{theme.name}</p>
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default Themes;

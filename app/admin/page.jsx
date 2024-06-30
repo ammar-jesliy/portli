@@ -31,7 +31,9 @@ const admin = () => {
       <h1>Admin page</h1>
       <p>{user?.primaryEmailAddress.emailAddress}</p>
       <p>{user?.fullName}</p>
-      <UserButton />
+      <div className="">
+        <UserButton />
+      </div>
     </div>
   );
 };
