@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm";
 
 const AdminProvider = ({ children }) => {
   const [displayMode, setDisplayMode] = useState("desktop");
+  const [theme, setTheme] = useState("light");
   const [userDetails, setUserDetails] = useState([]);
   const { user } = useUser();
 
@@ -25,9 +26,21 @@ const AdminProvider = ({ children }) => {
     setUserDetails(result);
   };
 
+  const refreshUserDetails = () => {
+    getUserDetails();
+  }
+
   return (
     <AdminContext.Provider
-      value={{ displayMode, setDisplayMode, setUserDetails, userDetails }}
+      value={{
+        displayMode,
+        setDisplayMode,
+        setUserDetails,
+        userDetails,
+        theme,
+        setTheme,
+        refreshUserDetails,
+      }}
     >
       <div>{children}</div>
     </AdminContext.Provider>

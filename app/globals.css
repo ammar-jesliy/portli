@@ -2,22 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-*::-webkit-scrollbar {
-  width: 8px; /* Width of vertical scrollbar */
+
+/* Scrollbar */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }
 
-*::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Track color */
+.scrollbar-hidden {
+  scrollbar-width: none;
 }
 
-*::-webkit-scrollbar-thumb {
-  border-radius: 8px; /* Rounded corners */
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* for Internet Explorer and Edge */
 }
-
-*::-webkit-scrollbar-thumb:hover {
-  background: #000; /* Hover state */
-}
-
 
 @keyframes slideUp {
   0% {

@@ -10,7 +10,7 @@ const admin = () => {
   const { user } = useUser();
   const router = useRouter();
 
-  const { displayMode, userDetails } = useContext(AdminContext);
+  const { displayMode, userDetails, theme } = useContext(AdminContext);
 
   useEffect(() => {
     user && checkUser();
@@ -26,16 +26,16 @@ const admin = () => {
     <div>
       {displayMode === "desktop" ? (
         <div 
-          className="min-h-screen w-screen"
-          data-theme="light"
+          className="min-h-screen w-screen transition-all duration-500"
+          data-theme={theme}
         >
           <SiteContent />
         </div>
       ) : (
-        <div className="flex justify-center bg-base-200 min-h-screen">
+        <div className="sm:flex sm:justify-center sm:bg-base-200 min-h-screen w-screen transition-all duration-700 overflow-hidden">
           <div 
-            className="w-[400px] h-[80vh] mt-[5vh] border-4 bg-base border-black rounded-3xl"
-            data-theme="light"
+            className="sm:w-[480px] sm:h-[80vh] sm:max-h-[850px] sm:mt-[5vh] sm:rounded-[32px] sm:shadow-xl transition-all duration-500 sm:overflow-x-auto scrollbar-hidden"
+            data-theme={theme}
           >
             <SiteContent />
           </div>
