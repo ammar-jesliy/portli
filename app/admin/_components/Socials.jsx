@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect, useContext } from "react";
 import {
@@ -22,106 +22,109 @@ import { toast } from "react-toastify";
 import { AdminContext } from "../../_context/AdminContext";
 
 const Socials = () => {
-
-  const [socialLinks, setSocialLinks] = useState({})
+  const [socialLinks, setSocialLinks] = useState({});
   const { user } = useUser();
-  const { userDetails } = useContext(AdminContext)
+  const { userDetails } = useContext(AdminContext);
 
   const iconMap = {
-    "instagram": {
+    instagram: {
       icon: SiInstagram,
       color: `linear-gradient( to right, #833ab4,#fd1d1d,#fcb045)`,
     },
-    "youtube": {
+    youtube: {
       icon: SiYoutube,
       color: "#cd201f",
     },
-    "x": {
+    x: {
       icon: SiX,
       color: "#000000",
     }, // Note: Twitter is now X
-    "facebook": {
+    facebook: {
       icon: SiFacebook,
       color: "#4267b2",
     },
-    "tiktok": {
+    tiktok: {
       icon: SiTiktok,
       color: "#000000",
     },
-    "linkedin": {
+    linkedin: {
       icon: SiLinkedin,
       color: "#0a66c2",
     },
-    "github": {
+    github: {
       icon: SiGithub,
       color: "#000000",
     },
-    "dribbble": {
+    dribbble: {
       icon: SiDribbble,
       color: "#ea4c89",
     },
-    "medium": {
+    medium: {
       icon: SiMedium,
       color: "#000000",
     },
-    "snapchat": {
+    snapchat: {
       icon: SiSnapchat,
       color: "#fffc00",
     },
   };
 
-
   useEffect(() => {
     user && getExistingSocials();
   }, [user]);
 
-
   const getExistingSocials = async () => {
     // Fetch social links from the database
     const result = await db
-    .select()
-    .from(userSocials)
-    .innerJoin(userInfo, eq(userInfo.id, userSocials.userId))
-    .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress))
-
+      .select()
+      .from(userSocials)
+      .innerJoin(userInfo, eq(userInfo.id, userSocials.userId))
+      .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
 
     if (result) {
-      const newSocialLinks = result.reduce((acc, social) => {
-        // Accumulate updates in a temporary object
-        acc[social.user_socials.platform] = social.user_socials.link;
-        return acc;
-      }, { ...socialLinks }); // Start with a copy of the current state
-    
+      const newSocialLinks = result.reduce(
+        (acc, social) => {
+          // Accumulate updates in a temporary object
+          acc[social.user_socials.platform] = social.user_socials.link;
+          return acc;
+        },
+        { ...socialLinks }
+      ); // Start with a copy of the current state
+
       setSocialLinks(newSocialLinks); // Update the state once with all changes
     }
-    console.log("Existing" , socialLinks)
-
-  }
+  };
 
   const handleChange = (platform, link) => {
-    console.log(platform, link)
     setSocialLinks({ ...socialLinks, [platform]: link });
-    console.log(socialLinks)
-  }
-
+  };
 
   const handleSaveSocials = async () => {
     try {
-      const operations = Object.keys(socialLinks).map(platform => {
+      const operations = Object.keys(socialLinks).map((platform) => {
         const updateOrInsert = async () => {
-          const social = await db.select().from(userSocials).where(eq(userSocials.platform, platform));
+          const social = await db
+            .select()
+            .from(userSocials)
+            .where(eq(userSocials.platform, platform));
           if (social.length > 0) {
-            return db.update(userSocials)
-              .set({ 'link': socialLinks[platform] })
+            return db
+              .update(userSocials)
+              .set({ link: socialLinks[platform] })
               .where(eq(userSocials.platform, platform));
           } else {
-            return db.insert(userSocials)
-              .values({ userId: userDetails[0]?.id, platform: platform, link: socialLinks[platform] });
+            return db
+              .insert(userSocials)
+              .values({
+                userId: userDetails[0]?.id,
+                platform: platform,
+                link: socialLinks[platform],
+              });
           }
         };
         return updateOrInsert();
       });
-  
+
       await Promise.all(operations);
       getExistingSocials();
       toast.success("Social links saved successfully", {
@@ -133,19 +136,23 @@ const Socials = () => {
     }
   };
 
-
   return (
     <div className="flex flex-wrap sm:gap-3 gap-2">
-
       {Object.entries(socialLinks).map(([platform, link]) => {
         const IconComponent = iconMap[platform].icon;
         return (
           link !== "" && (
-            <a href={link} target="_blank" key={platform} className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: iconMap[platform].color}}>
+            <a
+              href={link}
+              target="_blank"
+              key={platform}
+              className="w-10 h-10 rounded-full flex items-center justify-center"
+              style={{ background: iconMap[platform].color }}
+            >
               <IconComponent color="#ffffff" size={18} />
             </a>
           )
-        )
+        );
       })}
 
       {/* Add socials modal */}
@@ -324,13 +331,15 @@ const Socials = () => {
           <div className="modal-action">
             <form method="dialog" className="flex gap-3">
               <button className="btn">Close</button>
-              <button className="btn btn-success" onClick={handleSaveSocials}>Save</button>
+              <button className="btn btn-success" onClick={handleSaveSocials}>
+                Save
+              </button>
             </form>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
-            <button>close</button>
-          </form>
+          <button>close</button>
+        </form>
       </dialog>
     </div>
   );

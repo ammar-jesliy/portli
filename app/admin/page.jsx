@@ -16,7 +16,7 @@ const admin = () => {
     user && checkUser();
   }, [user]);
 
-  const checkUser = async () => {
+  const checkUser = () => {
     if (userDetails === 0) {
       router.replace("/create");
     }
@@ -24,24 +24,16 @@ const admin = () => {
 
   return (
     <div>
-      {displayMode === "desktop" ? (
         <div 
-          className="min-h-screen w-screen transition-all duration-500"
-          data-theme={theme}
+          className={`min-h-screen w-screen transition-all duration-300 sm:flex sm:justify-center ${displayMode === "desktop" || "sm:bg-base-200 overflow-hidden"}`}
+          
         >
-          <SiteContent />
-        </div>
-      ) : (
-        <div className="sm:flex sm:justify-center sm:bg-base-200 min-h-screen w-screen transition-all duration-700 overflow-hidden">
-          <div 
-            className="sm:w-[440px] sm:h-[80vh] sm:max-h-[850px] sm:mt-[5vh] sm:rounded-[32px] sm:shadow-xl transition-all duration-500 sm:overflow-x-auto scrollbar-hidden"
-            data-theme={theme}
+          <div className={displayMode === "desktop" ? "h-full w-full transition-all duration-300" : "sm:w-[440px] sm:h-[80vh] sm:max-h-[850px] sm:mt-[5vh] sm:rounded-[32px] sm:shadow-xl transition-all duration-300 sm:overflow-x-auto scrollbar-hidden"}
+          data-theme={theme}
           >
             <SiteContent />
           </div>
         </div>
-      )}
-
     </div>
   );
 };
