@@ -35,6 +35,12 @@ const createPage = () => {
     return allowedChars.test(sitename);
   }
 
+  const checkUsernameExists = async (sitename) => {
+    const result = await db.select().from(userInfo).where(eq(userInfo.username, sitename));
+
+    return result.length > 0;
+  }
+
   const onCreateButtonClick = async () => {
     if (sitename.length > 30) {
       toast.error("Site-name must be less than 30 characters", {
@@ -48,6 +54,10 @@ const createPage = () => {
       });
 
       return ;
+    } else if (await checkUsernameExists(sitename)) {
+      toast.error("Site-name already exists", {
+        position: "top-right"
+      });
     }
 
     const result = await db.insert(userInfo)

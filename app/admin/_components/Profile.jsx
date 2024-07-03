@@ -8,6 +8,7 @@ import { userInfo } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
 import { Pencil } from "lucide-react";
+import Socials from "./Socials";
 
 const Profile = () => {
   const { userDetails, displayMode, refreshUserDetails } = useContext(AdminContext);
@@ -90,13 +91,14 @@ const Profile = () => {
             {user?.fullName}
           </p>
           <textarea
-            className={`textarea textarea-ghost p-0 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-medium opacity-70 bg-base-300 .scrollbar-hidden ${displayMode === "mobile" ? `text-sm` : `sm:text-base`}`}
+            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden ${displayMode === "mobile" ? `text-sm` : `sm:text-base`}`}
             placeholder="Bio..."
             defaultValue={userDetails[0]?.bio}
             rows={4}
             maxLength={150}
             onChange={(e) => handleBioInput(e.target.value)}
           ></textarea>
+          <Socials />
         </div>
       </div>
     </>

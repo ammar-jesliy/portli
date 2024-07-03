@@ -34,7 +34,7 @@ const admin = () => {
       ) : (
         <div className="sm:flex sm:justify-center sm:bg-base-200 min-h-screen w-screen transition-all duration-700 overflow-hidden">
           <div 
-            className="sm:w-[480px] sm:h-[80vh] sm:max-h-[850px] sm:mt-[5vh] sm:rounded-[32px] sm:shadow-xl transition-all duration-500 sm:overflow-x-auto scrollbar-hidden"
+            className="sm:w-[440px] sm:h-[80vh] sm:max-h-[850px] sm:mt-[5vh] sm:rounded-[32px] sm:shadow-xl transition-all duration-500 sm:overflow-x-auto scrollbar-hidden"
             data-theme={theme}
           >
             <SiteContent />
