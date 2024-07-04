@@ -29,7 +29,7 @@ const Socials = () => {
   const iconMap = {
     instagram: {
       icon: SiInstagram,
-      color: `linear-gradient( to right, #833ab4,#fd1d1d,#fcb045)`,
+      color: `linear-gradient( to top right, #833ab4,#fd1d1d,#fcb045)`,
     },
     youtube: {
       icon: SiYoutube,

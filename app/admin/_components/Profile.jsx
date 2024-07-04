@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { AdminContext } from "../../_context/AdminContext";
 import { toast } from "react-toastify";
@@ -9,12 +9,24 @@ import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
 import { Pencil } from "lucide-react";
 import Socials from "./Socials";
+import { storage } from "../../../utils/firebaseConfig";
+import { ref, uploadBytes, deleteObject } from "firebase/storage";
+import Image from "next/image";
 
 const Profile = () => {
-  const { userDetails, displayMode, refreshUserDetails } = useContext(AdminContext);
-  const { user } = useUser();
-  let timeoutId;
+  const BASE_URL = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BASE_URL;
 
+  const { userDetails, displayMode, refreshUserDetails } =
+    useContext(AdminContext);
+  const { user } = useUser();
+
+  const [profileImage, setProfileImage] = useState();
+
+  useEffect(() => {
+    setProfileImage(userDetails[0]?.profileImage);
+  }, [userDetails]);
+
+  let timeoutId;
 
   const handleBioInput = (bio) => {
     const lineCount = bio.split(/\r\n|\r|\n/).length;
@@ -35,9 +47,10 @@ const Profile = () => {
     timeoutId = setTimeout(async () => {
       console.log("Updating bio...");
 
-      const result = await db.update(userInfo)
-      .set({ 'bio': bio })
-      .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
+      const result = await db
+        .update(userInfo)
+        .set({ bio: bio })
+        .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
 
       if (result) {
         refreshUserDetails();
@@ -49,11 +62,61 @@ const Profile = () => {
           position: "top-right",
         });
       }
-
     }, 3000);
+  };
 
-  }
+  const handleFileUpload = async (e) => {
 
+    // Delete existing profile image
+    if (profileImage) {
+      const existingRef = ref(storage, profileImage.split("?")[0]);
+
+      deleteObject(existingRef)
+        .then(() => {
+          console.log("Deleted existing profile image");
+        })
+        .catch((error) => {
+          console.error("Error deleting existing profile image", error); 
+        })
+
+      console.log(profileImage)
+    }
+
+    // Upload new profile image
+    const file = e.target.files[0];
+
+    const filename =
+      userDetails[0]?.username +
+      Date.now().toString() +
+      "." +
+      file.type.split("/")[1];
+
+    console.log(filename);
+
+    const storageRef = ref(storage, filename);
+
+    // 'file' comes from the Blob or File API
+    uploadBytes(storageRef, file).then(async (snapshot) => {
+      console.log("Uploaded a blob or file!");
+
+      const result = await db
+        .update(userInfo)
+        .set({ profileImage: filename + "?alt=media" })
+        .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
+
+      if (result) {
+        setProfileImage(filename + "?alt=media");
+        refreshUserDetails();
+        toast.success("Profile image updated successfully", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Failed to update profile image", {
+          position: "top-right",
+        });
+      }
+    });
+  };
 
   return (
     <>
@@ -77,9 +140,29 @@ const Profile = () => {
                 : `lg:h-[200px] lg:w-[200px] sm:w-[175px] sm:h-[175px]`
             }`}
           >
-            <div className="h-[30px] w-[30px] bg-base-100 absolute top-[85%] left-[85%] translate-x-[-50%] translate-y-[-50%] rounded-full sm:hidden group-hover:flex items-center justify-center drop-shadow-md flex">
-              <Pencil size={16}/>
-            </div>
+            {profileImage && (
+              <Image
+                src={BASE_URL + profileImage}
+                alt="Profile Image"
+                fill
+                sizes="(max-width: 640px) 130px, (max-width: 1024px) 175px, 200px"
+                className="rounded-full"
+                priority
+              />
+            )}
+            <label htmlFor="profile-input" className=" cursor-pointer">
+              <div className="h-[30px] w-[30px] bg-base-100 absolute z-10 top-[85%] left-[85%] translate-x-[-50%] translate-y-[-50%] rounded-full sm:hidden group-hover:flex items-center justify-center drop-shadow-md flex">
+                <Pencil size={16} />
+              </div>
+            </label>
+            <input
+              type="file"
+              name="profile-input"
+              id="profile-input"
+              className="hidden"
+              accept="image/png, image/gif, image/jpeg"
+              onChange={handleFileUpload}
+            />
           </div>
         </div>
         <div className="flex flex-[3] flex-col justify-center">
@@ -91,7 +174,9 @@ const Profile = () => {
             {user?.fullName}
           </p>
           <textarea
-            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden ${displayMode === "mobile" ? `text-sm` : `sm:text-base`}`}
+            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden ${
+              displayMode === "mobile" ? `text-sm` : `sm:text-base`
+            }`}
             placeholder="Bio..."
             defaultValue={userDetails[0]?.bio}
             rows={4}
