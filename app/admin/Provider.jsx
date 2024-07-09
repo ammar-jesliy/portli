@@ -11,6 +11,8 @@ const AdminProvider = ({ children }) => {
   const [displayMode, setDisplayMode] = useState("desktop");
   const [theme, setTheme] = useState("light");
   const [userDetails, setUserDetails] = useState([]);
+  const [desktopLayout, setDesktopLayout] = useState([]);
+  const [mobileLayout, setMobileLayout] = useState([]);
   const { user } = useUser();
 
   useEffect(() => {
@@ -30,6 +32,11 @@ const AdminProvider = ({ children }) => {
     getUserDetails();
   }
 
+  const addComponent = (component) => {
+    setDesktopLayout([...desktopLayout, component]);
+    setMobileLayout([...mobileLayout, component]);
+  };
+
   return (
     <AdminContext.Provider
       value={{
@@ -40,6 +47,11 @@ const AdminProvider = ({ children }) => {
         theme,
         setTheme,
         refreshUserDetails,
+        addComponent,
+        desktopLayout,
+        setDesktopLayout,
+        mobileLayout,
+        setMobileLayout
       }}
     >
       <div>{children}</div>

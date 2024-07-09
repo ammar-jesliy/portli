@@ -13,7 +13,7 @@ const Themes = () => {
       {themes.map((theme, index) => (
         <button 
           key={index} 
-          className="btn rounded-md px-[1px] m-1 text-xs sm:text-sm " 
+          className="btn rounded-md px-[1px] m-1 text-xs lg:text-sm " 
           data-theme={theme.name}
           onClick={() => setTheme(theme.name)}
         >

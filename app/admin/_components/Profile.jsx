@@ -122,22 +122,22 @@ const Profile = () => {
     <>
       <div className="absolute w-full h-[250px] top-0 left-0 bg-neutral z-0"></div>
       <div
-        className={`max-w-[1000px] w-[90%] min-h-[300px] bg-base-300 relative z-10 translate-x-[-50%] left-1/2 top-16 rounded-[35px] flex p-7 gap-3 ${
+        className={`max-w-[320px]  w-[90%] min-h-[300px] bg-base-300 relative z-10 translate-x-[-50%] left-1/2 top-9 rounded-[35px] flex p-7 gap-3 ${
           displayMode === "mobile"
             ? "flex-col p-7 pr-7 top-9"
-            : `lg:h-[350px] flex-col sm:flex-row sm:pr-10`
+            : `lg:min-h-[350px] flex-col lg:flex-row lg:pr-10 lg:top-16 lg:max-w-[916px]`
         } `}
       >
         <div
           className={`flex flex-[2] items-center ${
-            displayMode === "mobile" ? `justify-start` : `sm:justify-center`
+            displayMode === "mobile" ? `justify-start` : `lg:justify-center`
           }`}
         >
           <div
             className={`w-[130px] h-[130px] bg-base-100 rounded-full relative group ${
               displayMode === "mobile"
                 ? `mt-0`
-                : `lg:h-[200px] lg:w-[200px] sm:w-[175px] sm:h-[175px]`
+                : `lg:h-[200px] lg:w-[200px]`
             }`}
           >
             {profileImage && (
@@ -168,14 +168,14 @@ const Profile = () => {
         <div className="flex flex-[3] flex-col justify-center">
           <p
             className={`text-xl font-normal font-poppins ${
-              displayMode === "mobile" ? `text-xl` : `sm:text-2xl sm:py-2`
+              displayMode === "mobile" ? `text-xl` : `lg:text-2xl lg:py-2`
             }`}
           >
             {user?.fullName}
           </p>
           <textarea
             className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden ${
-              displayMode === "mobile" ? `text-sm` : `sm:text-base`
+              displayMode === "mobile" ? `text-sm` : `lg:text-base`
             }`}
             placeholder="Bio..."
             defaultValue={userDetails[0]?.bio}

@@ -161,7 +161,7 @@ const Socials = () => {
         onClick={() => document.getElementById("socials_modal").showModal()}
       >
         <Plus size={18} />
-        <p className="font-bold">Edit Socials</p>
+        <p className="font-bold font-sans">Edit Socials</p>
       </button>
       {/* Open the modal*/}
       <dialog id="socials_modal" className="modal modal-bottom sm:modal-middle">

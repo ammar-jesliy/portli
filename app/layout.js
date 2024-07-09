@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en" data-theme="light">
         <body
-          className={`${poppins.variable} ${bricolage.variable}`}
+          className={`${poppins.variable} ${bricolage.variable} h-full`}
         >
           {children}
           <ToastContainer />

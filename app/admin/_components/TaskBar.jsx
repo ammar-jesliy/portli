@@ -24,7 +24,7 @@ const TaskBar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const {displayMode, setDisplayMode} = useContext(AdminContext);
+  const {displayMode, setDisplayMode, addComponent} = useContext(AdminContext);
 
   const isActive = (path) => {
     return pathname === path;
@@ -32,13 +32,13 @@ const TaskBar = () => {
 
   return (
     <div className="flex items-center fixed bottom-7 h-[60px] w-max bg-base-100 left-1/2 translate-x-[-50%] rounded-2xl shadow-[0px_5px_9px_0px_rgba(0,0,0,0.25)] border-2 border-base-300 sm:px-5 px-[10px] sm:gap-1 gap-[2px] z-10">
-      {showItems && <Items />}
+      {showItems && <Items onItemClick={addComponent}/>}
 
       {showThemes && <Themes />}
 
       {pathname === "/admin" ? (
         <>
-          <div className="hidden sm:flex gap-1">
+          <div className="hidden lg:flex gap-1">
             <button 
               className={`btn btn-sm ${displayMode === "desktop" ? `btn-neutral` : `btn-ghost`}`}
               onClick={() => setDisplayMode("desktop")}
@@ -53,7 +53,7 @@ const TaskBar = () => {
               <Smartphone size={20} />
             </button>
           </div>
-          <div className="hidden sm:block h-1/3 w-[3px] bg-base-300 rounded-full mx-1"></div>
+          <div className="hidden lg:block h-1/3 w-[3px] bg-base-300 rounded-full mx-1"></div>
 
           <button
             className="btn btn-neutral btn-sm w-[85px] sm:w-[110px] flex-nowrap"
