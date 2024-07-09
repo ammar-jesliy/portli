@@ -8,6 +8,7 @@ export const userInfo = pgTable('user_info', {
     bio: text('bio'),
     profileImage: varchar('profile_image'),
     banner: varchar('banner'),
+    theme: varchar('theme').default('light'),
 });
 
 export const userSocials = pgTable('user_socials', {

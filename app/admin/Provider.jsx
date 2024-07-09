@@ -21,11 +21,16 @@ const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     userDetails.length > 0 && getLayouts();
+    userDetails.length > 0 && getTheme();
   }, [userDetails]);
 
   useEffect(() => {
     userDetails.length > 0 && saveLayouts();
   }, [desktopLayout, mobileLayout]);
+
+  useEffect(() => {
+    userDetails.length > 0 && saveTheme();
+  }, [theme]);
 
   const getUserDetails = async () => {
     const result = await db
@@ -38,7 +43,22 @@ const AdminProvider = ({ children }) => {
 
   const refreshUserDetails = () => {
     getUserDetails();
-  }
+  };
+
+  const getTheme = async () => {
+    if (userDetails.length > 0) {
+      setTheme(userDetails[0].theme);
+    }
+  };
+
+  const saveTheme = async () => {
+    if (userDetails.length > 0) {
+      const result = await db
+        .update(userInfo)
+        .set({ theme: theme })
+        .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
+    }
+  };
 
   const addComponent = (component) => {
     setDesktopLayout([...desktopLayout, component]);
@@ -52,16 +72,18 @@ const AdminProvider = ({ children }) => {
       .where(eq(userLayouts.userId, userDetails[0].id));
 
     if (result.length > 0) {
-      setDesktopLayout((result[0].desktopLayout));
-      setMobileLayout((result[0].mobileLayout));
+      setDesktopLayout(result[0].desktopLayout);
+      setMobileLayout(result[0].mobileLayout);
     } else {
       console.log("No layouts found");
     }
-  }
+  };
 
   const saveLayouts = async () => {
     const mobileLayoutJson = mobileLayout ? JSON.stringify(mobileLayout) : "[]";
-    const desktopLayoutJson = desktopLayout ? JSON.stringify(desktopLayout) : "[]";
+    const desktopLayoutJson = desktopLayout
+      ? JSON.stringify(desktopLayout)
+      : "[]";
 
     if (userDetails.length > 0) {
       const result = await db
@@ -69,22 +91,23 @@ const AdminProvider = ({ children }) => {
         .values({
           userId: userDetails[0].id,
           desktopLayout: desktopLayoutJson,
-          mobileLayout: mobileLayoutJson
-        }).onConflictDoUpdate({
+          mobileLayout: mobileLayoutJson,
+        })
+        .onConflictDoUpdate({
           target: userLayouts.userId,
           set: {
             desktopLayout: desktopLayoutJson,
-            mobileLayout: mobileLayoutJson
+            mobileLayout: mobileLayoutJson,
           },
         });
 
       if (result) {
         console.log("Layouts saved successfully");
       } else {
-          console.log("Error saving layouts");
-        }
+        console.log("Error saving layouts");
+      }
     }
-  }
+  };
 
   return (
     <AdminContext.Provider
@@ -100,7 +123,7 @@ const AdminProvider = ({ children }) => {
         desktopLayout,
         setDesktopLayout,
         mobileLayout,
-        setMobileLayout
+        setMobileLayout,
       }}
     >
       <div>{children}</div>
