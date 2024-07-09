@@ -9,7 +9,7 @@ const Themes = () => {
   const { setTheme } = useContext(AdminContext);
 
   return (
-    <div className="absolute grid grid-cols-2 sm:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 animate-slide-up z-[-1] scrollbar-hidden">
+    <div className="absolute grid grid-cols-2 lg:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 animate-slide-up z-[-1] scrollbar-hidden">
       {themes.map((theme, index) => (
         <button 
           key={index} 

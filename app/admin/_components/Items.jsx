@@ -3,9 +3,9 @@ import { ALargeSmall, Image, Heading, MapPinned, Link2 } from "lucide-react";
 
 const Items = ({ onItemClick }) => {
   return (
-    <div className="absolute flex flex-wrap px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 gap-1 justify-between animate-slide-up">
+    <div className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 gap-1 animate-slide-up">
       <button
-        className="btn btn-ghost px-2"
+        className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
             i: "text-" + Date.now().toString(),
@@ -22,7 +22,7 @@ const Items = ({ onItemClick }) => {
         <p className="w-[55px] text-left">Text box</p>
       </button>
       <button
-        className="btn btn-ghost px-2"
+        className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
             i: "image-" + Date.now().toString(),
@@ -39,7 +39,7 @@ const Items = ({ onItemClick }) => {
         <p className="w-[55px] text-left">Image</p>
       </button>
       <button
-        className="btn btn-ghost px-2"
+        className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
             i: "title-" + Date.now().toString(),
@@ -58,7 +58,7 @@ const Items = ({ onItemClick }) => {
         <p className="w-[55px] text-left">Title</p>
       </button>
       <button
-        className="btn btn-ghost px-2"
+        className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
             i: "map-" + Date.now().toString(),
@@ -75,7 +75,7 @@ const Items = ({ onItemClick }) => {
         <p className="w-[55px] text-left">Map</p>
       </button>
       <button
-        className="btn btn-ghost px-2"
+        className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
             i: "url-" + Date.now().toString(),
