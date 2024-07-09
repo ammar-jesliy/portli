@@ -3,6 +3,7 @@
 import { AdminContext } from "../../_context/AdminContext";
 import React, { useContext } from "react";
 import ReactGridLayout from "react-grid-layout";
+import Component from "./Component";
 
 const MobileContent = () => {
   const { mobileLayout, setMobileLayout } = useContext(AdminContext);
@@ -29,7 +30,7 @@ const MobileContent = () => {
             key={component.i}
             className="bg-base-300 flex items-center justify-center rounded-[25px]"
           >
-            {component.i.split("-")[0]}
+            <Component id={component.i} type={component.i.split("-")[0]}/>
           </div>
         ))}
       </ReactGridLayout>

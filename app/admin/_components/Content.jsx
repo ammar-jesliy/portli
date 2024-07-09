@@ -3,6 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../../app/_context/AdminContext";
 import ReactGridLayout from "react-grid-layout";
+import Component from "./Component";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
@@ -31,7 +32,7 @@ const Content = () => {
             key={component.i}
             className="bg-base-300 flex items-center justify-center rounded-[25px]"
           >
-            {component.i.split("-")[0]}
+            <Component id={component.i} type={component.i.split("-")[0]} />
           </div>
         ))}
       </ReactGridLayout>
