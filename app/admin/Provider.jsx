@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AdminContext } from "../_context/AdminContext";
 import { db } from "../../utils";
-import { userInfo } from "../../utils/schema";
+import { userInfo, userLayouts } from "../../utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 
@@ -18,6 +18,14 @@ const AdminProvider = ({ children }) => {
   useEffect(() => {
     user && getUserDetails();
   }, [user]);
+
+  useEffect(() => {
+    userDetails.length > 0 && getLayouts();
+  }, [userDetails]);
+
+  useEffect(() => {
+    userDetails.length > 0 && saveLayouts();
+  }, [desktopLayout, mobileLayout]);
 
   const getUserDetails = async () => {
     const result = await db
@@ -36,6 +44,47 @@ const AdminProvider = ({ children }) => {
     setDesktopLayout([...desktopLayout, component]);
     setMobileLayout([...mobileLayout, component]);
   };
+
+  const getLayouts = async () => {
+    const result = await db
+      .select()
+      .from(userLayouts)
+      .where(eq(userLayouts.userId, userDetails[0].id));
+
+    if (result.length > 0) {
+      setDesktopLayout((result[0].desktopLayout));
+      setMobileLayout((result[0].mobileLayout));
+    } else {
+      console.log("No layouts found");
+    }
+  }
+
+  const saveLayouts = async () => {
+    const mobileLayoutJson = mobileLayout ? JSON.stringify(mobileLayout) : "[]";
+    const desktopLayoutJson = desktopLayout ? JSON.stringify(desktopLayout) : "[]";
+
+    if (userDetails.length > 0) {
+      const result = await db
+        .insert(userLayouts)
+        .values({
+          userId: userDetails[0].id,
+          desktopLayout: desktopLayoutJson,
+          mobileLayout: mobileLayoutJson
+        }).onConflictDoUpdate({
+          target: userLayouts.userId,
+          set: {
+            desktopLayout: desktopLayoutJson,
+            mobileLayout: mobileLayoutJson
+          },
+        });
+
+      if (result) {
+        console.log("Layouts saved successfully");
+      } else {
+          console.log("Error saving layouts");
+        }
+    }
+  }
 
   return (
     <AdminContext.Provider

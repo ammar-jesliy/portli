@@ -1,4 +1,4 @@
-const { pgTable, serial, varchar, text, integer } = require("drizzle-orm/pg-core");
+const { pgTable, serial, varchar, text, integer, jsonb } = require("drizzle-orm/pg-core");
 
 export const userInfo = pgTable('user_info', {
     id: serial('id').primaryKey(),
@@ -15,4 +15,19 @@ export const userSocials = pgTable('user_socials', {
     userId: integer('user_id').references(() => userInfo.id),
     platform: varchar('platform').notNull(),
     link: varchar('link').notNull(),
+});
+
+export const userLayouts = pgTable('user_layouts', {
+    id: serial('id').primaryKey(),
+    userId: integer('user_id').references(() => userInfo.id).unique(),
+    desktopLayout: jsonb('desktop_layout'),
+    mobileLayout: jsonb('mobile_layout'),
+});
+
+export const components = pgTable('components', {
+    id: serial('id').primaryKey(),
+    userId: integer('user_id').references(() => userInfo.id),
+    layoutId: integer('layout_id').references(() => userLayouts.id),
+    type: varchar('type').notNull(),
+    data: jsonb('data'),
 });
