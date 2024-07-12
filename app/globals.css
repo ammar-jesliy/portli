@@ -34,3 +34,9 @@
 .grid-item {
   @apply rounded-[25px] overflow-hidden bg-base-300;
 }
+
+
+/* Override placholder style from react-grid-layout */
+.react-grid-item.react-grid-placeholder {
+  @apply bg-base-300 rounded-[25px] opacity-30 !important;
+}

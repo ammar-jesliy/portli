@@ -1,8 +1,8 @@
 import React from 'react'
 
-const MapComponent = () => {
+const MapComponent = ({ id }) => {
   return (
-    <div>MapComponent</div>
+    <div>MapComponent <br /> {id}</div>
   )
 }
 

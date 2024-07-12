@@ -51,6 +51,7 @@ const Items = ({ onItemClick }) => {
             minW: 6,
             maxH: 1,
             maxW: 6,
+            isResizable: false,
           });
         }}
       >

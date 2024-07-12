@@ -23,7 +23,7 @@ const Component = ({ id, type }) => {
   };
 
   return (
-    <div className="bg-base-300 h-full w-full flex items-center justify-center rounded-[25px]">
+    <div className="h-full w-full flex items-center justify-center">
       {renderComponent()}
     </div>
   );

@@ -24,13 +24,11 @@ const MobileContent = () => {
         compactType="vertical"
         containerPadding={[0, 0]}
         onLayoutChange={handleLayoutChange}
+        draggableHandle=".drag-handle"
       >
         {mobileLayout.map((component, index) => (
-          <div
-            key={component.i}
-            className="bg-base-300 flex items-center justify-center rounded-[25px]"
-          >
-            <Component id={component.i} type={component.i.split("-")[0]}/>
+          <div key={component.i}>
+            <Component id={component.i} type={component.i.split("-")[0]} />
           </div>
         ))}
       </ReactGridLayout>

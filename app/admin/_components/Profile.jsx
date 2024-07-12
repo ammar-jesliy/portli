@@ -174,7 +174,7 @@ const Profile = () => {
             {user?.fullName}
           </p>
           <textarea
-            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden ${
+            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden hover:bg-base-content/20 ${
               displayMode === "mobile" ? `text-sm` : `lg:text-base`
             }`}
             placeholder="Bio..."

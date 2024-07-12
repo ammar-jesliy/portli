@@ -1,8 +1,8 @@
 import React from 'react'
 
-const UrlComponent = () => {
+const UrlComponent = ({ id }) => {
   return (
-    <div>UrlComponent</div>
+    <div>UrlComponent <br /> {id} </div>
   )
 }
 
