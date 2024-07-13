@@ -12,7 +12,7 @@ const TitleComponent = ({ id }) => {
   return (
     <>
       <div className="hover:border border-base-300 hover:shadow bg-base-100 transition-all w-full h-full flex items-center justify-center rounded-[25px] px-4 py-1 group">
-        <ComponentMenuBar>
+        <ComponentMenuBar orientation={"horizontal"}>
           <button 
             className={`btn btn-ghost btn-sm text-gray-800 drag-handle ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             onMouseDown={() => setIsDragging(true)}

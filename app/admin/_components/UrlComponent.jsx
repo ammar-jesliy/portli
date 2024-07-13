@@ -1,9 +1,38 @@
-import React from 'react'
+import { useState } from "react";
+import ComponentMenuBar from "./ComponentMenuBar";
+import { Link, Move, Pencil, Trash } from "lucide-react";
 
 const UrlComponent = ({ id }) => {
-  return (
-    <div>UrlComponent <br /> {id} </div>
-  )
-}
+  const [isDragging, setIsDragging] = useState(false);
+  const [bgColor, setBgColor] = useState("bg-base-300");
 
-export default UrlComponent
+  return (
+    <div className={`${bgColor} w-full h-full rounded-[25px] flex justify-center items-center bg-base-300 group`}>
+      <ComponentMenuBar orientation={"vertical"}>
+        <button
+          className={`btn btn-sm btn-ghost px-2 drag-handle text-gray-800 ${
+            isDragging ? "cursor-grabbing" : "cursor-grab"
+          }`}
+          onMouseDown={() => setIsDragging(true)}
+          onMouseUp={() => setIsDragging(false)}
+        >
+          <Move size={16} />
+        </button>
+        <button className="btn btn-sm btn-ghost px-2 text-gray-800">
+          <Pencil size={16} />
+        </button>
+        <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
+        <button className="btn btn-sm btn-ghost px-2 text-red-600">
+          <Trash size={16} />
+        </button>
+      </ComponentMenuBar>
+
+      <button className={`btn ${bgColor === "bg-base-300" && "btn-primary"}`}>
+        <Link size={24} />
+        Add URL
+      </button>
+    </div>
+  );
+};
+
+export default UrlComponent;

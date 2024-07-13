@@ -28,7 +28,7 @@ export const userLayouts = pgTable('user_layouts', {
 export const components = pgTable('components', {
     id: serial('id').primaryKey(),
     userId: integer('user_id').references(() => userInfo.id),
-    layoutId: integer('layout_id').references(() => userLayouts.id),
+    componentId: varchar('component_id').notNull().unique(),
     type: varchar('type').notNull(),
     data: jsonb('data'),
 });
