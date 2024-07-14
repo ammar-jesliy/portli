@@ -79,6 +79,21 @@ const AdminProvider = ({ children }) => {
     }
   };
 
+  const removeComponent = async (componentId) => {
+    setDesktopLayout(desktopLayout.filter((item) => item.i !== componentId));
+    setMobileLayout(mobileLayout.filter((item) => item.i !== componentId));
+
+    const result = await db
+      .delete(components)
+      .where(eq(components.componentId, componentId));
+
+    if (result) {
+      console.log("Component removed successfully");
+    } else {
+      console.log("Error removing component");
+    }
+  }
+
   const getLayouts = async () => {
     const result = await db
       .select()
@@ -134,6 +149,7 @@ const AdminProvider = ({ children }) => {
         setTheme,
         refreshUserDetails,
         addComponent,
+        removeComponent,
         desktopLayout,
         setDesktopLayout,
         mobileLayout,

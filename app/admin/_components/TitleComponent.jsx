@@ -8,10 +8,11 @@ import { components } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
 
-const TitleComponent = ({ id }) => {
+const TitleComponent = ({ id, remove }) => {
   const [alignment, setAlignment] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [title, setTitle] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   let timeoutId;
 
@@ -19,13 +20,12 @@ const TitleComponent = ({ id }) => {
     getTitle();
   }, []);
 
-
   const getTitle = async () => {
     const result = await db
       .select()
       .from(components)
       .where(eq(components.componentId, id));
-    
+
     if (result.length > 0) {
       const data = result[0].data;
       setTitle(data?.title);
@@ -82,7 +82,7 @@ const TitleComponent = ({ id }) => {
         });
       }
     }, 3000);
-  }
+  };
 
   return (
     <>
@@ -100,7 +100,7 @@ const TitleComponent = ({ id }) => {
           <button
             className="btn btn-ghost btn-sm text-gray-800"
             onClick={() => {
-              setAlignment("left")
+              setAlignment("left");
               handleAlignmentChange("left");
             }}
           >
@@ -109,7 +109,7 @@ const TitleComponent = ({ id }) => {
           <button
             className="btn btn-ghost btn-sm text-gray-800"
             onClick={() => {
-              setAlignment("center")
+              setAlignment("center");
               handleAlignmentChange("center");
             }}
           >
@@ -117,17 +117,46 @@ const TitleComponent = ({ id }) => {
           </button>
           <button
             className="btn btn-ghost btn-sm text-gray-800"
-              onClick={() => {
-                setAlignment("right")
-                handleAlignmentChange("right");
-              }}
+            onClick={() => {
+              setAlignment("right");
+              handleAlignmentChange("right");
+            }}
           >
             <AlignRight size={16} />
           </button>
           <div className="w-[1px] h-[16px] bg-gray-300 rounded-full mx-1"></div>
-          <button className="btn btn-ghost btn-sm text-red-600">
+          <button
+            className="btn btn-ghost btn-sm text-red-600"
+            onClick={() => setModalVisible(true)}
+          >
             <Trash size={16} />
           </button>
+          {modalVisible && (
+            <div className="absolute bottom-0 right-0 -translate-y-[210%] w-full h-full z-50 flex items-center justify-center">
+              <div className="bg-white p-4 rounded-[10px] shadow">
+                <p className="text-xs text-black">
+                  Are you sure you want to delete this component?
+                </p>
+                <div className="flex gap-4 mt-2 justify-end">
+                  <button
+                    className="btn btn-xs w-12"
+                    onClick={() => setModalVisible(false)}
+                  >
+                    No
+                  </button>
+                  <button
+                    className="btn btn-xs w-12 btn-error"
+                    onClick={() => {
+                      remove(id);
+                      setModalVisible(false);
+                    }}
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </ComponentMenuBar>
 
         <input

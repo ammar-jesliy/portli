@@ -1,24 +1,29 @@
-import React from "react";
+"use client"
+
+import { useContext } from "react";
 import TitleComponent from "./TitleComponent";
 import TextComponent from "./TextComponent";
 import UrlComponent from "./UrlComponent";
 import ImageComponent from "./ImageComponent";
 import MapComponent from "./MapComponent";
+import { AdminContext } from "../../_context/AdminContext";
 
 const Component = ({ id, type }) => {
+
+  const { removeComponent } = useContext(AdminContext);
 
   const renderComponent = () => {
     switch (type) {
       case "title":
-        return <TitleComponent id={id} />;
+        return <TitleComponent id={id} remove={removeComponent} />;
       case "text":
-        return <TextComponent id={id} />;
+        return <TextComponent id={id} remove={removeComponent} />;
       case "url":
-        return <UrlComponent id={id} />;
+        return <UrlComponent id={id} remove={removeComponent} />;
       case "image":
-        return <ImageComponent id={id} />;
+        return <ImageComponent id={id} remove={removeComponent} />;
       case "map":
-        return <MapComponent id={id} />;
+        return <MapComponent id={id} remove={removeComponent} />;
     }
   };
 

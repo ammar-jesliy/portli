@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
 import { Move, Trash, Minus, X } from "lucide-react";
+import DeleteComponentModal from "./DeleteComponentModal";
 
-const TextComponent = ({ id }) => {
+const TextComponent = ({ id, remove }) => {
   const [bgColor, setBgColor] = useState("bg-base-300");
   const [isDragging, setIsDragging] = useState(false);
   const [titleVisible, setTitleVisible] = useState(true);
   const [colorMenuVisible, setColorMenuVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <div
@@ -77,9 +79,15 @@ const TextComponent = ({ id }) => {
           )}
         </button>
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
-        <button className="btn btn-sm btn-ghost px-2 text-red-600">
+        <button
+          className="btn btn-sm btn-ghost px-2 text-red-600"
+          onClick={() => setModalVisible(!modalVisible)}
+        >
           <Trash size={16} />
         </button>
+        {modalVisible && (
+          <DeleteComponentModal setModalVisible={setModalVisible} id={id} remove={remove} />
+        )}
       </ComponentMenuBar>
 
       {titleVisible && (
@@ -91,7 +99,7 @@ const TextComponent = ({ id }) => {
           }`}
         >
           <button
-            className="btn btn-xs border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full hidden group-hover:flex "
+            className="btn btn-xs border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full hidden group-hover:flex"
             onClick={() => setTitleVisible(false)}
             data-tip="Remove Title"
           >

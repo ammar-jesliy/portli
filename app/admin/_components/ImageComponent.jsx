@@ -11,12 +11,14 @@ import { components } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
+import DeleteComponentModal from "./DeleteComponentModal";
 
-const ImageComponent = ({ id }) => {
+const ImageComponent = ({ id, remove }) => {
   const BASE_URL = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BASE_URL;
 
   const [isDragging, setIsDragging] = useState(false);
   const [image, setImage] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { userDetails } = useContext(AdminContext);
 
@@ -91,9 +93,15 @@ const ImageComponent = ({ id }) => {
           <Pencil size={16} />
         </label>
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
-        <button className="btn btn-sm btn-ghost px-2 text-red-600">
+        <button 
+          className="btn btn-sm btn-ghost px-2 text-red-600"
+          onClick={() => setModalVisible(!modalVisible)}
+        >
           <Trash size={16} />
         </button>
+        {modalVisible && (
+          <DeleteComponentModal setModalVisible={setModalVisible} id={id} remove={remove} />
+        )}
       </ComponentMenuBar>
       {!image && (
         <label htmlFor={id + "Upload"} className="btn btn-primary shadow">
