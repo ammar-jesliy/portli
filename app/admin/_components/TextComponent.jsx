@@ -7,6 +7,8 @@ const TextComponent = ({ id }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [titleVisible, setTitleVisible] = useState(true);
   const [colorMenuVisible, setColorMenuVisible] = useState(false);
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
 
   return (
     <div

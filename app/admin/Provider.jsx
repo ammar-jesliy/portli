@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AdminContext } from "../_context/AdminContext";
 import { db } from "../../utils";
-import { userInfo, userLayouts } from "../../utils/schema";
+import { components, userInfo, userLayouts } from "../../utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 
@@ -60,9 +60,23 @@ const AdminProvider = ({ children }) => {
     }
   };
 
-  const addComponent = (component) => {
+  const addComponent = async (component) => {
     setDesktopLayout([...desktopLayout, component]);
     setMobileLayout([...mobileLayout, component]);
+
+    const result = await db
+      .insert(components)
+      .values({
+        userId: userDetails[0].id,
+        componentId: component.i,
+        type: component.i.split("-")[0],
+      });
+
+    if (result) {
+      console.log("Component added successfully");
+    } else {
+      console.log("Error adding component");
+    }
   };
 
   const getLayouts = async () => {

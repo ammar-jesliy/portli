@@ -22,7 +22,7 @@ const ImageComponent = ({ id }) => {
 
   useEffect(() => {
     getImage();
-  }, [image]);
+  }, []);
 
   const getImage = async () => {
     const result = await db
@@ -38,20 +38,6 @@ const ImageComponent = ({ id }) => {
   };
 
   const handleFileUpload = async (e) => {
-    // // Delete existing profile image
-    // if (image) {
-    //   const existingRef = ref(storage, image.split("?")[0]);
-
-    //   deleteObject(existingRef)
-    //     .then(() => {
-    //       console.log("Deleted existing image");
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error deleting existing image", error);
-    //     });
-
-    //   console.log(image);
-    // }
 
     // Upload new profile image
     const file = e.target.files[0];
@@ -60,7 +46,7 @@ const ImageComponent = ({ id }) => {
       userDetails[0]?.username + "-" + id + "." + file.type.split("/")[1];
 
     console.log(filename);
-    const dataJson = { filename: filename };
+    const data = { filename: filename };
 
     const storageRef = ref(storage, filename);
 
@@ -68,18 +54,10 @@ const ImageComponent = ({ id }) => {
     uploadBytes(storageRef, file).then(async (snapshot) => {
       console.log("Uploaded a blob or file!");
 
-      const result = await db.insert(components).values({
-        userId: userDetails[0].id,
-        componentId: id,
-        type: "image",
-        data: JSON.stringify(dataJson),
-      }).onConflictDoUpdate({
-        target: components.componentId,
-        set: {
-          data: JSON.stringify(dataJson),
-        },
-      })
-      ;
+      const result = await db
+        .update(components)
+        .set({ data: JSON.stringify(data) })
+        .where(eq(components.componentId, id))
 
       if (result) {
         setImage(filename + "?alt=media");
@@ -106,7 +84,10 @@ const ImageComponent = ({ id }) => {
         >
           <Move size={16} />
         </button>
-        <label htmlFor={id + "Upload"} className="btn btn-sm btn-ghost px-2 text-gray-800">
+        <label
+          htmlFor={id + "Upload"}
+          className="btn btn-sm btn-ghost px-2 text-gray-800"
+        >
           <Pencil size={16} />
         </label>
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
@@ -114,11 +95,13 @@ const ImageComponent = ({ id }) => {
           <Trash size={16} />
         </button>
       </ComponentMenuBar>
+      {!image && (
+        <label htmlFor={id + "Upload"} className="btn btn-primary shadow">
+          <ImageIcon size={24} />
+          Upload
+        </label>
+      )}
 
-      <label htmlFor={id + "Upload"} className="btn btn-primary shadow">
-        <ImageIcon size={24} />
-        Upload
-      </label>
       <input
         type="file"
         id={id + "Upload"}
