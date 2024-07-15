@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
-import { Move, Trash, Minus, X } from "lucide-react";
+import { Move, Trash, X } from "lucide-react";
 import DeleteComponentModal from "./DeleteComponentModal";
+import { toast } from "react-toastify";
+import { components } from "../../../utils/schema";
+import { db } from "../../../utils";
+import { eq } from "drizzle-orm";
 
 const TextComponent = ({ id, remove }) => {
   const [bgColor, setBgColor] = useState("bg-base-300");
@@ -11,6 +17,111 @@ const TextComponent = ({ id, remove }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+
+  let timeoutId;
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const result = await db
+      .select()
+      .from(components)
+      .where(eq(components.componentId, id));
+
+    if (result.length > 0) {
+      const data = result[0].data;
+      setTitle(data?.title);
+      setText(data?.text);
+      setTitleVisible(data?.titleVisible);
+    }
+  };
+
+  const handleTitleInput = (title) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(async () => {
+      console.log("Updating Title...");
+
+      const data = {
+        title: title,
+        text: text,
+        titleVisible: true,
+      };
+
+      const result = await db
+        .update(components)
+        .set({ data: JSON.stringify(data) })
+        .where(eq(components.componentId, id));
+
+      if (result) {
+        setTitle(title);
+        toast.success("Title updated successfully", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Failed to update title", {
+          position: "top-right",
+        });
+      }
+    }, 2000);
+  };
+
+  const handleTextInput = (text) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(async () => {
+      console.log("Updating Text...");
+
+      const data = {
+        title: title,
+        text: text,
+        titleVisible: titleVisible,
+      };
+
+      const result = await db
+        .update(components)
+        .set({ data: JSON.stringify(data) })
+        .where(eq(components.componentId, id));
+
+      if (result) {
+        setText(text);
+        toast.success("Text updated successfully", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Failed to update text", {
+          position: "top-right",
+        });
+      }
+    }, 2000);
+  };
+
+  const handleDeleteTitle = async () => {
+    const data = {
+      title: "",
+      text: text,
+      titleVisible: false,
+    };
+
+    const result = await db
+      .update(components)
+      .set({ data: JSON.stringify(data) })
+      .where(eq(components.componentId, id));
+
+    if (result) {
+      setTitle("");
+      setTitleVisible(false);
+      toast.success("Title removed successfully", {
+        position: "top-right",
+      });
+    } else {
+      toast.error("Failed to remove title", {
+        position: "top-right",
+      });
+    }
+  }
 
   return (
     <div
@@ -86,7 +197,11 @@ const TextComponent = ({ id, remove }) => {
           <Trash size={16} />
         </button>
         {modalVisible && (
-          <DeleteComponentModal setModalVisible={setModalVisible} id={id} remove={remove} />
+          <DeleteComponentModal
+            setModalVisible={setModalVisible}
+            id={id}
+            remove={remove}
+          />
         )}
       </ComponentMenuBar>
 
@@ -100,7 +215,7 @@ const TextComponent = ({ id, remove }) => {
         >
           <button
             className="btn btn-xs border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full hidden group-hover:flex"
-            onClick={() => setTitleVisible(false)}
+            onClick={() => handleDeleteTitle()}
             data-tip="Remove Title"
           >
             <X size={12} />
@@ -110,6 +225,8 @@ const TextComponent = ({ id, remove }) => {
             type="text"
             placeholder="Add title..."
             spellCheck="false"
+            defaultValue={title}
+            onChange={(e) => handleTitleInput(e.target.value)}
             className={`input input-sm w-full focus:outline-none bg-transparent text-base font-bold`}
           />
         </div>
@@ -127,7 +244,9 @@ const TextComponent = ({ id, remove }) => {
           id="text"
           placeholder="Add text"
           spellCheck="false"
-          className="w-full h-full textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px]"
+          defaultValue={text}
+          onChange={(e) => handleTextInput(e.target.value)}
+          className="w-full h-full textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight"
         ></textarea>
       </div>
     </div>
