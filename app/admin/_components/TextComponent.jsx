@@ -246,7 +246,7 @@ const TextComponent = ({ id, remove }) => {
           spellCheck="false"
           defaultValue={text}
           onChange={(e) => handleTextInput(e.target.value)}
-          className="w-full h-full textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight"
+          className="w-full h-full font-medium textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight"
         ></textarea>
       </div>
     </div>
