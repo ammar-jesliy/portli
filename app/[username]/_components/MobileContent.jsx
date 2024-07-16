@@ -1,19 +1,16 @@
-"use client";
-
-import { AdminContext } from "../../_context/AdminContext";
 import React, { useContext } from "react";
-import ReactGridLayout from "react-grid-layout";
 import Component from "./Component";
+import { UserPageContext } from "../../_context/UserPageContext";
+import ReactGridLayout from "react-grid-layout";
 
 const MobileContent = () => {
-  const { mobileLayout, setMobileLayout } = useContext(AdminContext);
 
-  const handleLayoutChange = (newLayout) => {
-    setMobileLayout(newLayout);
-  };
+  const { layouts } = useContext(UserPageContext)
+
+  const mobileLayout = layouts[0]?.mobileLayout || [];
 
   return (
-    <div className="relative  max-w-[320px] mx-auto mt-9 pt-14 pb-44">
+    <div className="relative max-w-[320px] mx-auto mt-9 pt-4 pb-44">
       <ReactGridLayout
         className="layout"
         layout={mobileLayout}
@@ -23,8 +20,8 @@ const MobileContent = () => {
         margin={[16, 16]}
         compactType="vertical"
         containerPadding={[0, 0]}
-        onLayoutChange={handleLayoutChange}
-        draggableHandle=".drag-handle"
+        isDraggable={false}
+        isResizable={false}
       >
         {mobileLayout.map((component, index) => (
           <div key={component.i}>
@@ -34,6 +31,6 @@ const MobileContent = () => {
       </ReactGridLayout>
     </div>
   );
-};
+}
 
-export default MobileContent;
+export default MobileContent

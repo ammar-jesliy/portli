@@ -3,6 +3,9 @@
 import { useContext } from "react";
 import { UserPageContext } from "../_context/UserPageContext";
 import Profile from "./_components/Profile";
+import MobileContent from "./_components/MobileContent";
+import DesktopContent from "./_components/DesktopContent";
+import Footer from "./_components/Footer";
 
 const UserPage = () => {
   const { userDetails, socials, layouts, userComponents } =
@@ -19,6 +22,15 @@ const UserPage = () => {
   return (
     <div className="w-full min-h-screen">
       <Profile name={userDetails[0]?.name} bio={userDetails[0]?.bio} image={userDetails[0]?.profileImage} socialLinks={socials} />
+      
+      <div className="block lg:hidden" >
+        <MobileContent />
+      </div>
+      <div className="hidden lg:block" >
+        <DesktopContent />
+      </div>
+
+      <Footer />
     </div>
   );
 };

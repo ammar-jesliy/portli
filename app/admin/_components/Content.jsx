@@ -15,7 +15,7 @@ const Content = () => {
   };
 
   return (
-    <div className="max-w-[916px] w-[90%] mx-auto mt-16 pt-5 pb-48">
+    <div className="max-w-[916px] w-[90%] mx-auto mt-16 pt-16 pb-48">
       <ReactGridLayout
         className="layout"
         layout={desktopLayout}

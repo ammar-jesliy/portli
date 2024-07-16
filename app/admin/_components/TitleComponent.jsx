@@ -132,20 +132,20 @@ const TitleComponent = ({ id, remove }) => {
             <Trash size={16} />
           </button>
           {modalVisible && (
-            <div className="absolute bottom-0 right-0 -translate-y-[210%] w-full h-full z-50 flex items-center justify-center">
-              <div className="bg-white p-4 rounded-[10px] shadow">
+            <div className="absolute bottom-0 right-0 -translate-y-[185%] w-full h-full z-50 flex items-center justify-center">
+              <div className="bg-white p-3 rounded-[10px] shadow">
                 <p className="text-xs text-black">
                   Are you sure you want to delete this component?
                 </p>
                 <div className="flex gap-4 mt-2 justify-end">
                   <button
-                    className="btn btn-xs w-12"
+                    className="btn btn-xs w-12 bg-slate-700 text-white border-none"
                     onClick={() => setModalVisible(false)}
                   >
                     No
                   </button>
                   <button
-                    className="btn btn-xs w-12 btn-error"
+                    className="btn btn-xs w-12 bg-red-600 hover:bg-red-800 text-white border-none"
                     onClick={() => {
                       remove(id);
                       setModalVisible(false);
