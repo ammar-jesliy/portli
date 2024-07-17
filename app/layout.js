@@ -25,7 +25,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl="/">
       <html lang="en" data-theme="light">
         <body
           className={`${poppins.variable} ${bricolage.variable} h-full`}

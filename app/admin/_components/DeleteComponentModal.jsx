@@ -1,6 +1,6 @@
 import React from "react";
 
-const DeleteComponentModal = ({ setModalVisible, remove, id }) => {
+const DeleteComponentModal = ({ setModalVisible, remove, id, image }) => {
   return (
     <div className="bg-white absolute left-0 bottom-0 -translate-x-[105%] w-[120px] rounded-lg shadow flex flex-col items-center justify-center p-2 gap-3">
       <p className="text-black text-xs">
@@ -16,7 +16,7 @@ const DeleteComponentModal = ({ setModalVisible, remove, id }) => {
         <button
           className="btn btn-xs w-12 bg-red-600 hover:bg-red-800 text-white border-none"
           onClick={() => {
-            remove(id);
+            remove(id, image);
             setModalVisible(false);
           }}
         >

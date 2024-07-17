@@ -34,7 +34,14 @@ const TextComponent = ({ id, remove }) => {
       const data = result[0].data;
       setTitle(data?.title);
       setText(data?.text);
-      setTitleVisible(data?.titleVisible);
+      
+      if (data) {
+        setTitleVisible(data?.titleVisible);
+        setBgColor(data?.color);
+      } else {
+        setTitleVisible(true);
+        setBgColor("bg-base-300");
+      }
     }
   };
 
@@ -48,6 +55,7 @@ const TextComponent = ({ id, remove }) => {
         title: title,
         text: text,
         titleVisible: true,
+        color: bgColor
       };
 
       const result = await db
@@ -78,6 +86,7 @@ const TextComponent = ({ id, remove }) => {
         title: title,
         text: text,
         titleVisible: titleVisible,
+        color: bgColor
       };
 
       const result = await db
@@ -103,6 +112,7 @@ const TextComponent = ({ id, remove }) => {
       title: "",
       text: text,
       titleVisible: false,
+      color: bgColor
     };
 
     const result = await db
@@ -123,6 +133,32 @@ const TextComponent = ({ id, remove }) => {
     }
   }
 
+  const handleChangeColor = async (color) => {
+    const data = {
+      title: title,
+      text: text,
+      titleVisible: titleVisible,
+      color: color
+    };
+
+    const result = await db
+      .update(components)
+      .set({ data: JSON.stringify(data) })
+      .where(eq(components.componentId, id));
+
+    if (result) {
+      setBgColor(color);
+      toast.success("Color updated successfully", {
+        position: "top-right",
+      });
+    } else {
+      toast.error("Failed to update color", {
+        position: "top-right",
+      });
+    }
+  }
+
+
   return (
     <div
       className={`${bgColor} w-full h-full rounded-[25px] group flex items-center justify-center transition-colors duration-300 p-4 flex-col gap-3`}
@@ -138,6 +174,7 @@ const TextComponent = ({ id, remove }) => {
             onClick={() => {
               setBgColor("bg-primary");
               setColorMenuVisible(false);
+              handleChangeColor("bg-primary");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-primary"></div>
@@ -147,6 +184,7 @@ const TextComponent = ({ id, remove }) => {
             onClick={() => {
               setBgColor("bg-secondary");
               setColorMenuVisible(false);
+              handleChangeColor("bg-secondary");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-secondary"></div>
@@ -156,6 +194,7 @@ const TextComponent = ({ id, remove }) => {
             onClick={() => {
               setBgColor("bg-accent");
               setColorMenuVisible(false);
+              handleChangeColor("bg-accent");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-accent"></div>
@@ -165,6 +204,7 @@ const TextComponent = ({ id, remove }) => {
             onClick={() => {
               setBgColor("bg-base-300");
               setColorMenuVisible(false);
+              handleChangeColor("bg-base-300");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-base-300"></div>
@@ -210,7 +250,7 @@ const TextComponent = ({ id, remove }) => {
           className={`w-full hover:bg-base-content/20 rounded-[9px] relative ${
             bgColor === "bg-accent"
               ? "text-primary-content"
-              : "text-" + bgColor.split("-")[1] + "-content"
+              : "text-" + bgColor?.split("-")[1] + "-content"
           }`}
         >
           <button
@@ -236,7 +276,7 @@ const TextComponent = ({ id, remove }) => {
         className={`flex-1 w-full resize-none min-h-0 hover:bg-base-content/20 rounded-[9px] ${
           bgColor === "bg-accent"
             ? "text-primary-content"
-            : "text-" + bgColor.split("-")[1] + "-content"
+            : "text-" + bgColor?.split("-")[1] + "-content"
         }`}
       >
         <textarea

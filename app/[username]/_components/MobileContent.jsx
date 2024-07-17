@@ -10,7 +10,7 @@ const MobileContent = () => {
   const mobileLayout = layouts[0]?.mobileLayout || [];
 
   return (
-    <div className="relative max-w-[320px] mx-auto mt-9 pt-4 pb-44">
+    <div className="relative max-w-[320px] mx-auto mt-9 pt-14 pb-44">
       <ReactGridLayout
         className="layout"
         layout={mobileLayout}

@@ -6,6 +6,8 @@ import { db } from "../../utils";
 import { components, userInfo, userLayouts } from "../../utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
+import { ref, deleteObject } from "firebase/storage";
+import { storage } from "../../utils/firebaseConfig";
 
 const AdminProvider = ({ children }) => {
   const [displayMode, setDisplayMode] = useState("desktop");
@@ -79,9 +81,24 @@ const AdminProvider = ({ children }) => {
     }
   };
 
-  const removeComponent = async (componentId) => {
+  const removeComponent = async (componentId, image) => {
     setDesktopLayout(desktopLayout.filter((item) => item.i !== componentId));
     setMobileLayout(mobileLayout.filter((item) => item.i !== componentId));
+
+    if (componentId.split("-")[0] === "image" && image) {
+
+      // Delete image from storage
+      const storageRef = ref(storage, image.split("?")[0]);
+
+      deleteObject(storageRef)
+      .then(() => {
+        console.log("Deleted image");
+      })
+      .catch((error) => {
+        console.error("Error deleting image", error); 
+      })
+
+    }
 
     const result = await db
       .delete(components)

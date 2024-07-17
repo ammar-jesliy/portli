@@ -10,7 +10,7 @@ const DesktopContent = () => {
   const desktopLayout = layouts[0]?.desktopLayout || [];
 
   return (
-    <div className="max-w-[916px] w-[90%] mx-auto mt-16 pt-5 pb-44">
+    <div className="max-w-[916px] w-[90%] mx-auto mt-16 pt-16 pb-44">
       <ReactGridLayout
         className="layout"
         layout={desktopLayout}

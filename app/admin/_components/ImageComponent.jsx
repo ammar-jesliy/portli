@@ -35,7 +35,9 @@ const ImageComponent = ({ id, remove }) => {
 
     if (result.length > 0) {
       const data = result[0].data;
-      setImage(data.filename + "?alt=media");
+      if (data?.filename) {
+        setImage(data?.filename + "?alt=media");
+      }
     }
   };
 
@@ -100,7 +102,7 @@ const ImageComponent = ({ id, remove }) => {
           <Trash size={16} />
         </button>
         {modalVisible && (
-          <DeleteComponentModal setModalVisible={setModalVisible} id={id} remove={remove} />
+          <DeleteComponentModal setModalVisible={setModalVisible} id={id} remove={remove} image={image} />
         )}
       </ComponentMenuBar>
       {!image && (
