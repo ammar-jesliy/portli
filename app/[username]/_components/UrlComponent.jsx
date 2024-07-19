@@ -46,7 +46,7 @@ const UrlComponent = ({ data }) => {
             className={`text-xs font-medium leading-tight line-clamp-2 text-ellipsis px-2 ${
               data?.color === "bg-accent"
                 ? "text-primary-content"
-                : "text-" + data.color?.split("-")[1] + "-content"
+                : "text-" + data?.color?.split("-")[1] + "-content"
             }`}
           >
             {data?.description}
