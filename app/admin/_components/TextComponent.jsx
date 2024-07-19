@@ -34,7 +34,7 @@ const TextComponent = ({ id, remove }) => {
       const data = result[0].data;
       setTitle(data?.title);
       setText(data?.text);
-      
+
       if (data) {
         setTitleVisible(data?.titleVisible);
         setBgColor(data?.color);
@@ -55,7 +55,7 @@ const TextComponent = ({ id, remove }) => {
         title: title,
         text: text,
         titleVisible: true,
-        color: bgColor
+        color: bgColor,
       };
 
       const result = await db
@@ -86,7 +86,7 @@ const TextComponent = ({ id, remove }) => {
         title: title,
         text: text,
         titleVisible: titleVisible,
-        color: bgColor
+        color: bgColor,
       };
 
       const result = await db
@@ -112,7 +112,7 @@ const TextComponent = ({ id, remove }) => {
       title: "",
       text: text,
       titleVisible: false,
-      color: bgColor
+      color: bgColor,
     };
 
     const result = await db
@@ -131,14 +131,14 @@ const TextComponent = ({ id, remove }) => {
         position: "top-right",
       });
     }
-  }
+  };
 
   const handleChangeColor = async (color) => {
     const data = {
       title: title,
       text: text,
       titleVisible: titleVisible,
-      color: color
+      color: color,
     };
 
     const result = await db
@@ -156,8 +156,7 @@ const TextComponent = ({ id, remove }) => {
         position: "top-right",
       });
     }
-  }
-
+  };
 
   return (
     <div
