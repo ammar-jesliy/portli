@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import "leaflet/dist/leaflet.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
