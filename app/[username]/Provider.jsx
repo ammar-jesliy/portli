@@ -17,6 +17,7 @@ const UserPageProvider = ({ children }) => {
   const [socials, setSocials] = useState([]);
   const [layouts, setLayouts] = useState([]);
   const [userComponents, setUserComponents] = useState([]);
+  const [isFetching, setIsFetching] = useState(true);
 
   const pathname = usePathname();
 
@@ -31,6 +32,7 @@ const UserPageProvider = ({ children }) => {
   }, [userDetails]);
 
   const getUserDetails = async () => {
+    setIsFetching(true);
     const result = await db
       .select()
       .from(userInfo)
@@ -41,6 +43,7 @@ const UserPageProvider = ({ children }) => {
     if (result.length > 0) {
       setUserDetails(result);
     }
+    setIsFetching(false);
   };
 
   const getUserSocials = async () => {
@@ -78,7 +81,7 @@ const UserPageProvider = ({ children }) => {
 
   return (
     <UserPageContext.Provider
-      value={{ userDetails, socials, layouts, userComponents }}
+      value={{ userDetails, socials, layouts, userComponents, isFetching }}
     >
       <div data-theme={userDetails[0]?.theme}>
         {children}

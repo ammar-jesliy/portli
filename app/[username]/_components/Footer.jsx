@@ -40,7 +40,7 @@ const Footer = () => {
           height="170"
           rx="24"
           stroke="white"
-          stroke-width="10"
+          strokeWidth="10"
           className="fill-current text-base-content stroke-base-100"
         />
         <rect

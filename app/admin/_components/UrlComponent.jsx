@@ -188,7 +188,7 @@ const UrlComponent = ({ id, remove }) => {
           {colorMenuVisible ? (
             <X size={16} />
           ) : (
-            <div className={`h-4 w-4 rounded-full ${bgColor}`}></div>
+            <div className={`h-4 w-4 rounded-full ${ogData?.color}`}></div>
           )}
         </button>
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
