@@ -67,6 +67,9 @@ module.exports = {
         primaryPurple: "#AC59FF",
         primaryTextDarkBlue: "#0A004D",
       },
+      boxShadow: {
+        'inner-button': "inset 0 0 4px 0 rgba(0, 0, 0, 0.25)",
+      },
     },
   },
   plugins: [require("daisyui")],
