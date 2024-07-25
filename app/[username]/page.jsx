@@ -6,6 +6,8 @@ import Profile from "./_components/Profile";
 import MobileContent from "./_components/MobileContent";
 import DesktopContent from "./_components/DesktopContent";
 import Footer from "./_components/Footer";
+import Loading from './_components/Loading'
+import NotFound from './_components/NotFound'
 
 const UserPage = () => {
   const { userDetails, socials, layouts, userComponents, isFetching } =
@@ -18,9 +20,9 @@ const UserPage = () => {
   console.log(isFetching)
 
   if (isFetching) {
-    return <div>Loading...</div>;
+    return <Loading />;
   } else if (userDetails.length === 0) {
-    return <div>User not found</div>;
+    return <NotFound />;
   } else {
     return (
       <div className="w-full min-h-screen">

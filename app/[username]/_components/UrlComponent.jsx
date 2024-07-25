@@ -2,7 +2,7 @@ import React from "react";
 
 const UrlComponent = ({ data }) => {
   return (
-    <div className={`w-full h-full rounded-[25px] ${data?.color}`}>
+    <div className={`w-full h-full rounded-[25px] ${data?.color} bg-opacity-85 hover:bg-opacity-100`}>
       <a
         href={data?.url}
         target="_blank"
