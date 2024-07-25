@@ -43,7 +43,7 @@ module.exports = {
   },
   theme: {
     fontSize: {
-      'tiny': '10px',
+      'tiny': '8px',
       'xs': '12px',
       'sm': '14px',
       'base': '18px',

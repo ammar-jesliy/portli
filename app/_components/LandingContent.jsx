@@ -3,6 +3,7 @@ import Header from "./Header";
 import Hero from "./Hero";
 import Features from "./Features";
 import Cta from "./Cta";
+import Footer from "./Footer"
 
 const LandingContent = () => {
   return (
@@ -13,6 +14,7 @@ const LandingContent = () => {
           <Hero />
           <Features />
           <Cta />
+          <Footer />
         </div>
       </div>
     </>
