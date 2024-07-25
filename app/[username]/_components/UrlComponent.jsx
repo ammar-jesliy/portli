@@ -26,7 +26,7 @@ const UrlComponent = ({ data }) => {
                 className={`text-base font-bold leading-tight line-clamp-1 text-ellipsis ${
                   data?.color === "bg-accent"
                     ? "text-primary-content"
-                    : "text-" + data.color?.split("-")[1] + "-content"
+                    : "text-" + data?.color?.split("-")[1] + "-content"
                 }`}
               >
                 {data?.title}
@@ -35,7 +35,7 @@ const UrlComponent = ({ data }) => {
                 className={`text-sm font-semibold opacity-70  ${
                   data?.color === "bg-accent"
                     ? "text-primary-content"
-                    : "text-" + data.color?.split("-")[1] + "-content"
+                    : "text-" + data?.color?.split("-")[1] + "-content"
                 }`}
               >
                 {data?.url?.split("/")[2]}

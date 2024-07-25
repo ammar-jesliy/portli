@@ -40,3 +40,14 @@
 .react-grid-item.react-grid-placeholder {
   @apply bg-base-300 rounded-[25px] opacity-30 border border-base-content border-dashed !important;
 }
+
+.full-bleed {
+  box-shadow: 0 0 0 100vmax #0A004C;
+  clip-path: inset(0 calc((-50vw + 50%) + 4px) round 10px);
+
+  @media (min-width: 767px) {
+    & {
+      clip-path: inset(0 calc((-50vw + 50%) + 16px) round 20px);
+    }
+  }
+}
