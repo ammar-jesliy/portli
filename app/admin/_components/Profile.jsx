@@ -28,6 +28,38 @@ const Profile = () => {
 
   let timeoutId;
 
+  const handleNameInput = (name) => {
+
+    if (name.length === 0) {
+      toast.info("Please Enter a name", {
+        position: "top-right",
+      });
+      return;
+    }
+
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async () => {
+      console.log("Updating name...");
+
+      const result = await db
+        .update(userInfo)
+        .set({ name: name })
+        .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
+
+      if (result) {
+        refreshUserDetails();
+        toast.success("Name updated successfully", {
+          position: "top-right",
+        });
+      } else {
+        toast.error("Failed to update name", {
+          position: "top-right",
+        });
+      }
+    }, 2000);
+  };
+
+
   const handleBioInput = (bio) => {
     const lineCount = bio.split(/\r\n|\r|\n/).length;
 
@@ -166,16 +198,18 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex flex-[3] flex-col justify-center">
-          <p
-            className={`text-xl font-normal font-poppins ${
-              displayMode === "mobile" ? `text-xl` : `lg:text-2xl lg:py-2`
+          <input
+            type="text"
+            className={`input input-ghost p-0 text-lg bg-base-300 hover:bg-base-content/20 focus:outline-none font-normal font-poppins tracking-tighter max-w-[500px] ${
+              displayMode === "mobile" ? `text-lg` : `lg:text-2xl lg:mb-2`
             }`}
-          >
-            {user?.fullName}
-          </p>
+            defaultValue={userDetails[0]?.name}
+            placeholder="name..."
+            onChange={(e) => handleNameInput(e.target.value)}
+          />
           <textarea
-            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-sm max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden hover:bg-base-content/20 ${
-              displayMode === "mobile" ? `text-sm` : `lg:text-base`
+            className={`textarea textarea-ghost font-poppins p-0 mb-4 rounded-lg leading-tight text-xs max-w-[500px] overflow-clip font-normal opacity-70 bg-base-300 .scrollbar-hidden hover:bg-base-content/20 focus:outline-none ${
+              displayMode === "mobile" ? `text-xs` : `lg:text-base`
             }`}
             placeholder="Bio..."
             defaultValue={userDetails[0]?.bio}
