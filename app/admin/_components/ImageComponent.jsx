@@ -16,11 +16,12 @@ import DeleteComponentModal from "./DeleteComponentModal";
 const ImageComponent = ({ id, remove }) => {
   const BASE_URL = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BASE_URL;
 
+  // const [image, setImage] = useState();
   const [isDragging, setIsDragging] = useState(false);
-  const [image, setImage] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { userDetails } = useContext(AdminContext);
+  const { userDetails, componentData, updateComponentData } =
+    useContext(AdminContext);
 
   useEffect(() => {
     getImage();
@@ -34,20 +35,38 @@ const ImageComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result.length > 0) {
-      const data = result[0].data;
-      if (data?.filename) {
-        setImage(data?.filename + "?alt=media");
-      }
+      const data = result[0].data
+      updateComponentData(id, data);
     }
   };
 
   const handleFileUpload = async (e) => {
+    // Delete existing profile image
+    if (componentData[id]?.filename) {
+      const existingRef = ref(storage, componentData[id]?.filename);
+
+      deleteObject(existingRef)
+        .then(() => {
+          console.log("Deleted existing image");
+        })
+        .catch((error) => {
+          console.error("Error deleting existing image", error);
+        });
+
+      console.log(componentData[id]?.filename);
+    }
 
     // Upload new profile image
     const file = e.target.files[0];
 
     const filename =
-      userDetails[0]?.username + "-" + id + "." + file.type.split("/")[1];
+      userDetails[0]?.username +
+      "-" +
+      id +
+      "-" +
+      Date.now().toString() +
+      "." +
+      file.type.split("/")[1];
 
     console.log(filename);
     const data = { filename: filename };
@@ -61,10 +80,10 @@ const ImageComponent = ({ id, remove }) => {
       const result = await db
         .update(components)
         .set({ data: JSON.stringify(data) })
-        .where(eq(components.componentId, id))
+        .where(eq(components.componentId, id));
 
       if (result) {
-        setImage(filename + "?alt=media");
+        updateComponentData(id, { filename });
         toast.success("Image updated successfully", {
           position: "top-right",
         });
@@ -95,17 +114,22 @@ const ImageComponent = ({ id, remove }) => {
           <Pencil size={16} />
         </label>
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
-        <button 
+        <button
           className="btn btn-sm btn-ghost px-2 text-red-600"
           onClick={() => setModalVisible(!modalVisible)}
         >
           <Trash size={16} />
         </button>
         {modalVisible && (
-          <DeleteComponentModal setModalVisible={setModalVisible} id={id} remove={remove} image={image} />
+          <DeleteComponentModal
+            setModalVisible={setModalVisible}
+            id={id}
+            remove={remove}
+            image={componentData[id]?.filename}
+          />
         )}
       </ComponentMenuBar>
-      {!image && (
+      {!componentData[id]?.filename && (
         <label htmlFor={id + "Upload"} className="btn btn-primary shadow">
           <ImageIcon size={24} />
           Upload
@@ -119,9 +143,9 @@ const ImageComponent = ({ id, remove }) => {
         accept="image/png, image/gif, image/jpeg"
         onChange={handleFileUpload}
       />
-      {image && (
+      {componentData[id]?.filename && (
         <Image
-          src={BASE_URL + image}
+          src={BASE_URL + componentData[id]?.filename + "?alt=media"}
           alt="Image"
           fill
           className="rounded-[25px] object-cover"

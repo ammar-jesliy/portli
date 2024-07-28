@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
 import { AlignCenter, AlignLeft, AlignRight, Trash, Move } from "lucide-react";
 import { toast } from "react-toastify";
 import { components } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
+import { AdminContext } from "../../_context/AdminContext";
 
 const TitleComponent = ({ id, remove }) => {
-  const [alignment, setAlignment] = useState("");
   const [isDragging, setIsDragging] = useState(false);
-  const [title, setTitle] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+
+  const { componentData, updateComponentData } = useContext(AdminContext)
 
   let timeoutId;
 
@@ -28,14 +29,13 @@ const TitleComponent = ({ id, remove }) => {
 
     if (result.length > 0) {
       const data = result[0].data;
-      setTitle(data?.title);
-      setAlignment(data?.alignment);
+      updateComponentData(id, data)
     }
   };
 
   const handleAlignmentChange = async (alignment) => {
     const data = {
-      title: title,
+      title: componentData[id]?.title,
       alignment: alignment,
     };
 
@@ -45,6 +45,7 @@ const TitleComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
+      updateComponentData(id, { alignment })
       toast.success("Alignment updated successfully", {
         position: "top-right",
       });
@@ -63,7 +64,7 @@ const TitleComponent = ({ id, remove }) => {
 
       const data = {
         title: title,
-        alignment: alignment,
+        alignment: componentData[id]?.alignment
       };
 
       const result = await db
@@ -72,7 +73,7 @@ const TitleComponent = ({ id, remove }) => {
         .where(eq(components.componentId, id));
 
       if (result) {
-        setTitle(title);
+        updateComponentData(id, { title })
         toast.success("Title updated successfully", {
           position: "top-right",
         });
@@ -81,7 +82,7 @@ const TitleComponent = ({ id, remove }) => {
           position: "top-right",
         });
       }
-    }, 3000);
+    }, 1000);
   };
 
   return (
@@ -100,7 +101,6 @@ const TitleComponent = ({ id, remove }) => {
           <button
             className="btn btn-ghost btn-sm text-gray-800"
             onClick={() => {
-              setAlignment("left");
               handleAlignmentChange("left");
             }}
           >
@@ -109,7 +109,6 @@ const TitleComponent = ({ id, remove }) => {
           <button
             className="btn btn-ghost btn-sm text-gray-800"
             onClick={() => {
-              setAlignment("center");
               handleAlignmentChange("center");
             }}
           >
@@ -118,7 +117,6 @@ const TitleComponent = ({ id, remove }) => {
           <button
             className="btn btn-ghost btn-sm text-gray-800"
             onClick={() => {
-              setAlignment("right");
               handleAlignmentChange("right");
             }}
           >
@@ -163,8 +161,8 @@ const TitleComponent = ({ id, remove }) => {
           type="text"
           placeholder="Title..."
           className="input w-full input-sm focus:outline-none hover:bg-base-200 text-lg font-bold rounded-[9px]"
-          style={{ textAlign: alignment }}
-          defaultValue={title}
+          style={{ textAlign: componentData[id]?.alignment }}
+          defaultValue={componentData[id]?.title}
           onChange={(e) => handleTitleInput(e.target.value)}
         />
       </div>

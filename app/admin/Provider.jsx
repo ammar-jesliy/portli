@@ -15,6 +15,7 @@ const AdminProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState([]);
   const [desktopLayout, setDesktopLayout] = useState([]);
   const [mobileLayout, setMobileLayout] = useState([]);
+  const [componentData, setComponentData] = useState({})
   const { user } = useUser();
 
   useEffect(() => {
@@ -155,6 +156,13 @@ const AdminProvider = ({ children }) => {
     }
   };
 
+  const updateComponentData = (id, newData) => {
+    setComponentData((prevData) => ({
+      ...prevData,
+      [id]: { ...prevData[id], ...newData },
+    })) 
+  }
+
   return (
     <AdminContext.Provider
       value={{
@@ -171,6 +179,8 @@ const AdminProvider = ({ children }) => {
         setDesktopLayout,
         mobileLayout,
         setMobileLayout,
+        componentData,
+        updateComponentData
       }}
     >
       <div>{children}</div>

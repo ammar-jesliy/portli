@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
 import DeleteComponentModal from "./DeleteComponentModal";
-import { Link, Move, Pencil, Trash, X } from "lucide-react";
-import Image from "next/image";
+import { Link, Move, Trash, X } from "lucide-react";
 import { db } from "../../../utils";
 import { components } from "../../../utils/schema";
 import { eq } from "drizzle-orm";
 import { toast } from "react-toastify";
+import { AdminContext } from "../../_context/AdminContext";
 
 const UrlComponent = ({ id, remove }) => {
+  const [url, setUrl] = useState("");
+  const [fetchedOgData, setFetchedOgData] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [url, setUrl] = useState("");
-  const [ogData, setOgData] = useState(null);
-  const [fetchedOgData, setFetchedOgData] = useState(null);
   const [error, setError] = useState(null);
-  const [bgColor, setBgColor] = useState("bg-base-300");
   const [colorMenuVisible, setColorMenuVisible] = useState(false);
+
+  const { componentData, updateComponentData } = useContext(AdminContext);
 
   useEffect(() => {
     fetchedOgData && saveDataToDB();
@@ -29,6 +29,7 @@ const UrlComponent = ({ id, remove }) => {
   }, []);
 
   const fetchOgData = async () => {
+    console.log("fetching og data");
     try {
       const response = await fetch("/api/fetch-og-data", {
         method: "POST",
@@ -64,7 +65,7 @@ const UrlComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result.length > 0) {
-      setOgData(result[0].data);
+      updateComponentData(id, result[0].data);
     } else {
       console.log("No data found");
     }
@@ -72,12 +73,12 @@ const UrlComponent = ({ id, remove }) => {
 
   const saveDataToDB = async () => {
     const data = {
-      url: url,
+      url: componentData[id]?.url,
       title: fetchedOgData?.metaTags["og:title"],
       description: fetchedOgData?.metaTags.description,
       image: fetchedOgData?.metaTags["og:image"],
       favicon: fetchedOgData?.favicon,
-      color: bgColor,
+      color: componentData[id]?.color,
     };
 
     const result = await db
@@ -86,18 +87,18 @@ const UrlComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      setOgData(data);
+      updateComponentData(id, data);
       console.log("Data saved to DB");
     }
   };
 
   const handleChangeColor = async (color) => {
     const data = {
-      url: ogData?.url,
-      title: ogData?.title,
-      description: ogData?.description,
-      image: ogData?.image,
-      favicon: ogData?.favicon,
+      url: componentData[id]?.url,
+      title: componentData[id]?.title,
+      description: componentData[id]?.description,
+      image: componentData[id]?.image,
+      favicon: componentData[id]?.favicon,
       color: color,
     };
 
@@ -107,8 +108,7 @@ const UrlComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      setBgColor(color);
-      setOgData(data);
+      updateComponentData(id, { color });
       toast.success("Color updated successfully", {
         position: "top-right",
       });
@@ -122,7 +122,7 @@ const UrlComponent = ({ id, remove }) => {
   return (
     <div
       className={`w-full h-full rounded-[25px] flex justify-center items-center ${
-        ogData ? ogData?.color : "bg-base-300"
+        componentData[id]?.color || "bg-base-300"
       } group`}
     >
       <ComponentMenuBar orientation={"vertical"}>
@@ -134,9 +134,8 @@ const UrlComponent = ({ id, remove }) => {
           <button
             className="btn btn-xs btn-ghost px-2"
             onClick={() => {
-              setBgColor("bg-primary");
               setColorMenuVisible(false);
-              ogData && handleChangeColor("bg-primary");
+              componentData[id] && handleChangeColor("bg-primary");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-primary"></div>
@@ -144,9 +143,8 @@ const UrlComponent = ({ id, remove }) => {
           <button
             className="btn btn-xs btn-ghost px-2"
             onClick={() => {
-              setBgColor("bg-secondary");
               setColorMenuVisible(false);
-              ogData && handleChangeColor("bg-secondary");
+              componentData[id] && handleChangeColor("bg-secondary");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-secondary"></div>
@@ -154,9 +152,8 @@ const UrlComponent = ({ id, remove }) => {
           <button
             className="btn btn-xs btn-ghost px-2"
             onClick={() => {
-              setBgColor("bg-accent");
               setColorMenuVisible(false);
-              ogData && handleChangeColor("bg-accent");
+              componentData[id] && handleChangeColor("bg-accent");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-accent"></div>
@@ -164,9 +161,8 @@ const UrlComponent = ({ id, remove }) => {
           <button
             className="btn btn-xs btn-ghost px-2"
             onClick={() => {
-              setBgColor("bg-base-300");
               setColorMenuVisible(false);
-              ogData && handleChangeColor("bg-base-300");
+              componentData[id] && handleChangeColor("bg-base-300");
             }}
           >
             <div className="h-4 w-7 rounded-lg bg-base-300"></div>
@@ -181,16 +177,23 @@ const UrlComponent = ({ id, remove }) => {
         >
           <Move size={16} />
         </button>
-        <button
-          className="btn btn-sm btn-ghost px-2"
-          onClick={() => setColorMenuVisible(!colorMenuVisible)}
-        >
-          {colorMenuVisible ? (
-            <X size={16} />
-          ) : (
-            <div className={`h-4 w-4 rounded-full ${ogData?.color}`}></div>
-          )}
-        </button>
+        {(componentData[id] && Object.keys(componentData[id]).length === 0) || (
+          <button
+            className="btn btn-sm btn-ghost px-2"
+            onClick={() => setColorMenuVisible(!colorMenuVisible)}
+          >
+            {colorMenuVisible ? (
+              <X size={16} />
+            ) : (
+              <div
+                className={`h-4 w-4 rounded-full ${
+                  componentData[id]?.color || "bg-base-300"
+                }`}
+              ></div>
+            )}
+          </button>
+        )}
+
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
         <button
           className="btn btn-sm btn-ghost px-2 text-red-600"
@@ -206,7 +209,7 @@ const UrlComponent = ({ id, remove }) => {
           />
         )}
       </ComponentMenuBar>
-      {!ogData ? (
+      {componentData[id] && Object.keys(componentData[id]).length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-3">
           <form onSubmit={handleSubmit}>
             <input
@@ -227,7 +230,7 @@ const UrlComponent = ({ id, remove }) => {
         </div>
       ) : (
         <a
-          href={ogData?.url}
+          href={componentData[id]?.url}
           target="_blank"
           className="w-full h-full p-4 flex flex-col gap-1 justify-between url-container"
         >
@@ -238,7 +241,7 @@ const UrlComponent = ({ id, remove }) => {
               >
                 <div className="w-8 h-8 rounded">
                   <img
-                    src={ogData?.favicon}
+                    src={componentData[id]?.favicon}
                     alt="Favicon"
                     className="w-full h-full object-cover"
                   />
@@ -247,38 +250,44 @@ const UrlComponent = ({ id, remove }) => {
               <div className="flex-1 flex items-start justify-center flex-col">
                 <p
                   className={`text-base font-bold leading-tight line-clamp-1 text-ellipsis ${
-                    ogData?.color === "bg-accent"
+                    componentData[id]?.color === "bg-accent"
                       ? "text-primary-content"
-                      : "text-" + ogData.color?.split("-")[1] + "-content"
+                      : "text-" +
+                        componentData[id]?.color?.split("-")[1] +
+                        "-content"
                   }`}
                 >
-                  {ogData?.title}
+                  {componentData[id]?.title}
                 </p>
                 <p
                   className={`text-sm font-semibold opacity-70  ${
-                    ogData?.color === "bg-accent"
+                    componentData[id]?.color === "bg-accent"
                       ? "text-primary-content"
-                      : "text-" + ogData.color?.split("-")[1] + "-content"
+                      : "text-" +
+                        componentData[id]?.color?.split("-")[1] +
+                        "-content"
                   }`}
                 >
-                  {ogData?.url?.split("/")[2]}
+                  {componentData[id]?.url?.split("/")[2]}
                 </p>
               </div>
             </div>
             <p
               className={`text-xs font-medium leading-tight line-clamp-2 text-ellipsis px-2 ${
-                ogData?.color === "bg-accent"
+                componentData[id]?.color === "bg-accent"
                   ? "text-primary-content"
-                  : "text-" + ogData.color?.split("-")[1] + "-content"
+                  : "text-" +
+                    componentData[id]?.color?.split("-")[1] +
+                    "-content"
               }`}
             >
-              {ogData?.description}
+              {componentData[id]?.description}
             </p>
           </div>
-          {ogData?.image ? (
+          {componentData[id]?.image ? (
             <div className="w-full aspect-[13/6] bg-base-200/50 rounded-[10px] overflow-hidden">
               <img
-                src={ogData?.image}
+                src={componentData[id]?.image}
                 alt="OG image"
                 className="w-full h-full object-cover"
               />
@@ -286,7 +295,7 @@ const UrlComponent = ({ id, remove }) => {
           ) : (
             <div className="w-full aspect-[13/6] bg-base-200/50 rounded-[10px] overflow-hidden flex items-center justify-center">
               <img
-                src={ogData?.favicon}
+                src={componentData[id]?.favicon}
                 alt="No image found"
                 className="w-fit h-fit object-contain"
               />
