@@ -16,6 +16,7 @@ import {
 import Themes from "./Themes";
 import Items from "./Items";
 import { AdminContext } from "../../_context/AdminContext";
+import { toast } from "react-toastify";
 
 const TaskBar = () => {
   const [showItems, setShowItems] = useState(false);
@@ -23,12 +24,26 @@ const TaskBar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { displayMode, setDisplayMode, addComponent } =
+  const { displayMode, setDisplayMode, addComponent, userDetails } =
     useContext(AdminContext);
-
+ 
   const isActive = (path) => {
     return pathname === path;
   };
+
+  const copyToClipboard = async () => {
+    const url = "https://portli.me/" + userDetails[0]?.username;
+
+    try {
+      await navigator.clipboard.writeText(url)
+      toast.success("Link copied to Clipboard", {
+        position: "top-right"
+      });
+    } catch (error) {
+      console.log("failed to copy text: ", error)
+    }
+
+  }
 
   return (
     <div className="flex items-center fixed bottom-7 h-[60px] w-max bg-base-100 left-1/2 translate-x-[-50%] rounded-2xl shadow-[0px_5px_9px_0px_rgba(0,0,0,0.25)] border-2 border-base-300 sm:px-5 px-[10px] sm:gap-1 gap-[2px] z-10">
@@ -73,8 +88,8 @@ const TaskBar = () => {
               </>
             ) : (
               <>
-                <Component size={16} />
-                <p className="text-nowrap">
+                <Component size={14} />
+                <p className="text-nowrap text-xs font-poppins">
                   Add <span className="sm:inline hidden">Item</span>
                 </p>
               </>
@@ -139,7 +154,15 @@ const TaskBar = () => {
       </button>
 
       <div className="h-1/3 w-[3px] bg-base-300 rounded-full sm:mx-1 mx-[2px]"></div>
-      <label className="grid cursor-pointer place-items-center mx-1">
+
+      <button 
+        className="btn btn-sm font-poppins text-xs bg-primaryLightBlue text-white hover:bg-primaryLightBlue/80 mx-1"
+        onClick={copyToClipboard}
+      >
+        Copy Link
+      </button>
+
+      {/* <label className="grid cursor-pointer place-items-center mx-1">
         <input
           type="checkbox"
           value="dark"
@@ -174,7 +197,7 @@ const TaskBar = () => {
         >
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
-      </label>
+      </label> */}
       <UserButton />
     </div>
   );
