@@ -7,6 +7,7 @@ import UrlComponent from "./UrlComponent";
 import ImageComponent from "./ImageComponent";
 import MapComponent from "./MapComponent";
 import { UserPageContext } from "../../_context/UserPageContext";
+import SpacerComponent from "../../admin/_components/SpacerComponent";
 
 const Component = ({ id, type }) => {
 
@@ -26,6 +27,8 @@ const Component = ({ id, type }) => {
         return <ImageComponent data={data} />;
       case "map":
         return <MapComponent data={data} />;
+      case "spacer":
+        return <SpacerComponent data={data} />;
     }
   };
 

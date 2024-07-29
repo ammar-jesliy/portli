@@ -98,7 +98,7 @@ const TaskBar = () => {
 
           <button
             className={`btn btn-sm ${
-              showThemes ? `btn-neutral` : `btn-ghost`
+              showThemes ? `btn-neutral bg-black` : `btn-ghost`
             }  sm:tooltip tooltip-top px-1 sm:px-2 transition`}
             data-tip="Themes"
             onClick={() => {
@@ -127,7 +127,7 @@ const TaskBar = () => {
 
       <button
         className={`btn btn-sm sm:tooltip tooltip-top px-1 sm:px-2 ${
-          isActive("/admin/analytics") ? "btn-neutral" : "btn-ghost"
+          isActive("/admin/analytics") ? "btn-neutral bg-black" : "btn-ghost"
         }`}
         data-tip="Analytics"
         onClick={() => {
@@ -141,7 +141,7 @@ const TaskBar = () => {
 
       <button
         className={`btn btn-sm sm:tooltip tooltip-top px-1 sm:px-2 ${
-          isActive("/admin/templates") ? "btn-neutral" : "btn-ghost"
+          isActive("/admin/templates") ? "btn-neutral bg-black" : "btn-ghost"
         }`}
         data-tip="Templates"
         onClick={() => {

@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section className="flex flex-col items-center gap-24 w-full mt-16 sm:mt-[100px]">
       <div className="flex items-center flex-col justify-center gap-8 sm:gap-10">
-        <h1 className="max-w-[320px] font-bricolage text-center font-medium text-primaryTextDarkBlue text-3xl leading-[1] tracking-tight sm:text-[85px] sm:max-w-[665px]">
+        <h1 className="max-w-[320px] font-bricolage text-center font-semibold text-primaryTextDarkBlue text-3xl leading-[1] tracking-tight sm:text-[85px] sm:max-w-[665px]">
           Craft your unique microsite
           <br />{" "}
           <span className="bg-gradient-to-r from-primaryLightBlue to-primaryBlue text-transparent bg-clip-text">
