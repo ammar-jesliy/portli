@@ -8,7 +8,7 @@ const SpacerComponent = ({ id, remove }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <div className="hover:border border-base-300 hover:shadow bg-base-100 transition-all w-full h-full flex items-center justify-center rounded-[25px] px-4 py-1 group opacity-0 hover:opacity-100">
+    <div className="hover:border border-base-300 hover:shadow bg-base-100 transition-all w-full h-full flex items-center justify-center rounded-[25px] px-4 py-1 group opacity-30 hover:opacity-100">
       <ComponentMenuBar orientation={"horizontal"}>
         <button
           className={`btn btn-ghost btn-sm text-gray-800 drag-handle ${
