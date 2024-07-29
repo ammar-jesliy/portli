@@ -17,7 +17,7 @@ import { Share2, Plus } from "lucide-react";
 import { db } from "../../../utils";
 import { useUser } from "@clerk/nextjs";
 import { userInfo, userSocials } from "../../../utils/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { toast } from "react-toastify";
 import { AdminContext } from "../../_context/AdminContext";
 import iconData from "../../_data/iconData";
@@ -66,20 +66,28 @@ const Socials = () => {
           const social = await db
             .select()
             .from(userSocials)
-            .where(eq(userSocials.platform, platform));
+            .where(
+              and(
+                eq(userDetails[0]?.id, userSocials.userId),
+                eq(userSocials.platform, platform)
+              )
+            );
           if (social.length > 0) {
             return db
               .update(userSocials)
               .set({ link: socialLinks[platform] })
-              .where(eq(userSocials.platform, platform));
+              .where(
+                and(
+                  eq(userDetails[0]?.id, userSocials.userId),
+                  eq(userSocials.platform, platform)
+                )
+              );
           } else {
-            return db
-              .insert(userSocials)
-              .values({
-                userId: userDetails[0]?.id,
-                platform: platform,
-                link: socialLinks[platform],
-              });
+            return db.insert(userSocials).values({
+              userId: userDetails[0]?.id,
+              platform: platform,
+              link: socialLinks[platform],
+            });
           }
         };
         return updateOrInsert();
