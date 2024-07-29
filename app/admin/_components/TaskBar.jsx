@@ -2,7 +2,6 @@
 
 import React, { useState, useContext } from "react";
 import { UserButton } from "@clerk/nextjs";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutPanelTop,
@@ -24,7 +23,8 @@ const TaskBar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const {displayMode, setDisplayMode, addComponent} = useContext(AdminContext);
+  const { displayMode, setDisplayMode, addComponent } =
+    useContext(AdminContext);
 
   const isActive = (path) => {
     return pathname === path;
@@ -32,22 +32,26 @@ const TaskBar = () => {
 
   return (
     <div className="flex items-center fixed bottom-7 h-[60px] w-max bg-base-100 left-1/2 translate-x-[-50%] rounded-2xl shadow-[0px_5px_9px_0px_rgba(0,0,0,0.25)] border-2 border-base-300 sm:px-5 px-[10px] sm:gap-1 gap-[2px] z-10">
-      {showItems && <Items onItemClick={addComponent}/>}
+      {showItems && <Items onItemClick={addComponent} />}
 
       {showThemes && <Themes />}
 
       {pathname === "/admin" ? (
         <>
           <div className="hidden lg:flex gap-1">
-            <button 
-              className={`btn btn-sm ${displayMode === "desktop" ? `btn-neutral` : `btn-ghost`}`}
+            <button
+              className={`btn btn-sm ${
+                displayMode === "desktop" ? `btn-neutral` : `btn-ghost`
+              }`}
               onClick={() => setDisplayMode("desktop")}
             >
               <Monitor size={20} />
             </button>
 
-            <button 
-              className={`btn btn-sm ${displayMode === "mobile" ? `btn-neutral` : `btn-ghost`}`}
+            <button
+              className={`btn btn-sm ${
+                displayMode === "mobile" ? `btn-neutral` : `btn-ghost`
+              }`}
               onClick={() => setDisplayMode("mobile")}
             >
               <Smartphone size={20} />
@@ -122,18 +126,16 @@ const TaskBar = () => {
 
       <button
         className={`btn btn-sm sm:tooltip tooltip-top px-1 sm:px-2 ${
-          isActive("/admin/layouts") ? "btn-neutral" : "btn-ghost"
+          isActive("/admin/templates") ? "btn-neutral" : "btn-ghost"
         }`}
-        data-tip="Layouts"
+        data-tip="Templates"
         onClick={() => {
           setShowItems(false);
           setShowThemes(false);
-          router.push("/admin/layouts");
+          router.push("/admin/templates");
         }}
       >
-        <Link href="/admin/layouts">
-          <LayoutPanelTop className="w-5 sm:w-6" />
-        </Link>
+        <LayoutPanelTop className="w-5 sm:w-6" />
       </button>
 
       <div className="h-1/3 w-[3px] bg-base-300 rounded-full sm:mx-1 mx-[2px]"></div>
