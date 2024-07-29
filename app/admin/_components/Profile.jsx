@@ -200,7 +200,7 @@ const Profile = () => {
         <div className="flex flex-[3] flex-col justify-center">
           <input
             type="text"
-            className={`input input-ghost p-0 text-lg bg-base-300 hover:bg-base-content/20 focus:outline-none font-normal font-poppins tracking-tighter max-w-[500px] ${
+            className={`input input-ghost rounded-lg p-0 text-lg bg-base-300 hover:bg-base-content/20 focus:outline-none font-normal font-poppins tracking-tighter max-w-[500px] ${
               displayMode === "mobile" ? `text-lg` : `lg:text-2xl lg:mb-2`
             }`}
             defaultValue={userDetails[0]?.name}

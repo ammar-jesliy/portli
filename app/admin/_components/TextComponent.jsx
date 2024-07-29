@@ -23,10 +23,6 @@ const TextComponent = ({ id, remove }) => {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log("data has changes")
-  }, [componentData[id]])
-
   const getData = async () => {
     const result = await db
       .select()
@@ -156,8 +152,6 @@ const TextComponent = ({ id, remove }) => {
       });
     }
   };
-
-  console.log(componentData[id])
 
   return (
     <div

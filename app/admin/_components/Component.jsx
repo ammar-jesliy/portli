@@ -6,6 +6,7 @@ import TextComponent from "./TextComponent";
 import UrlComponent from "./UrlComponent";
 import ImageComponent from "./ImageComponent";
 import MapComponent from "./MapComponent";
+import SpacerComponent from "./SpacerComponent"
 import { AdminContext } from "../../_context/AdminContext";
 
 const Component = ({ id, type }) => {
@@ -24,6 +25,8 @@ const Component = ({ id, type }) => {
         return <ImageComponent id={id} remove={removeComponent} />;
       case "map":
         return <MapComponent id={id} remove={removeComponent} />;
+      case "spacer":
+        return <SpacerComponent id={id} remove={removeComponent} />;
     }
   };
 

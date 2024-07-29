@@ -1,5 +1,5 @@
 import React from "react";
-import { ALargeSmall, Image, Heading, MapPinned, Link2 } from "lucide-react";
+import { ALargeSmall, Image, Heading, MapPinned, BetweenHorizontalStart, Link2 } from "lucide-react";
 
 const Items = ({ onItemClick }) => {
   return (
@@ -59,7 +59,7 @@ const Items = ({ onItemClick }) => {
         <Heading size={24} />
         <p className="w-[55px] text-left">Title</p>
       </button>
-      <button
+      {/* <button
         className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
@@ -75,6 +75,25 @@ const Items = ({ onItemClick }) => {
       >
         <MapPinned size={24} />
         <p className="w-[55px] text-left">Map</p>
+      </button> */}
+      <button
+        className="btn btn-ghost px-2 justify-start"
+        onClick={() => {
+          onItemClick({
+            i: "spacer-" + Date.now().toString(),
+            x: 0,
+            y: 999,
+            w: 2,
+            h: 4,
+            minH: 1,
+            minW: 1,
+            maxH: 8,
+            maxW: 6,
+          });
+        }}
+      >
+        <BetweenHorizontalStart size={24} />
+        <p className="w-[55px] text-left">Spacer</p>
       </button>
       <button
         className="btn btn-ghost px-2 justify-start"
