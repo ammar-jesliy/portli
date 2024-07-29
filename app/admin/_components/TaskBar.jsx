@@ -56,7 +56,7 @@ const TaskBar = () => {
           <div className="hidden lg:flex gap-1">
             <button
               className={`btn btn-sm ${
-                displayMode === "desktop" ? `btn-neutral` : `btn-ghost`
+                displayMode === "desktop" ? `btn-neutral bg-black` : `btn-ghost`
               }`}
               onClick={() => setDisplayMode("desktop")}
             >
@@ -65,7 +65,7 @@ const TaskBar = () => {
 
             <button
               className={`btn btn-sm ${
-                displayMode === "mobile" ? `btn-neutral` : `btn-ghost`
+                displayMode === "mobile" ? `btn-neutral bg-black` : `btn-ghost`
               }`}
               onClick={() => setDisplayMode("mobile")}
             >
@@ -75,7 +75,7 @@ const TaskBar = () => {
           <div className="hidden lg:block h-1/3 w-[3px] bg-base-300 rounded-full mx-1"></div>
 
           <button
-            className="btn btn-neutral btn-sm w-[85px] sm:w-[110px] flex-nowrap"
+            className="btn btn-neutral bg-black btn-sm w-[85px] sm:w-[110px] flex-nowrap"
             onClick={() => {
               setShowThemes(false);
               setShowItems(!showItems);
