@@ -66,14 +66,16 @@ const UrlComponent = ({ id, remove }) => {
 
     if (result.length > 0) {
       updateComponentData(id, result[0].data);
+      console.log(id + " - " + result[0]?.data)
     } else {
+      updateComponentData(id, {})
       console.log("No data found");
     }
   };
 
   const saveDataToDB = async () => {
     const data = {
-      url: componentData[id]?.url,
+      url: url,
       title: fetchedOgData?.metaTags["og:title"],
       description: fetchedOgData?.metaTags.description,
       image: fetchedOgData?.metaTags["og:image"],
@@ -118,6 +120,8 @@ const UrlComponent = ({ id, remove }) => {
       });
     }
   };
+
+  console.log(componentData[id])
 
   return (
     <div
@@ -209,7 +213,7 @@ const UrlComponent = ({ id, remove }) => {
           />
         )}
       </ComponentMenuBar>
-      {componentData[id] && Object.keys(componentData[id]).length === 0 ? (
+      {(componentData[id] && Object.keys(componentData[id]).length === 0) ? (
         <div className="flex flex-col items-center justify-center gap-3">
           <form onSubmit={handleSubmit}>
             <input
