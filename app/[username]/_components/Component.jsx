@@ -7,7 +7,7 @@ import UrlComponent from "./UrlComponent";
 import ImageComponent from "./ImageComponent";
 import MapComponent from "./MapComponent";
 import { UserPageContext } from "../../_context/UserPageContext";
-import SpacerComponent from "../../admin/_components/SpacerComponent";
+import SpacerComponent from "./SpacerComponent";
 
 const Component = ({ id, type }) => {
 
