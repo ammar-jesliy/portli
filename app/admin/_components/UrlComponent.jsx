@@ -126,7 +126,7 @@ const UrlComponent = ({ id, remove }) => {
     >
       <ComponentMenuBar orientation={"vertical"}>
         <div
-          className={`absolute w-full h-full left-0 -translate-x-[120%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden flex flex-col items-center justify-around shadow ${
+          className={`absolute w-full h-full left-0 top-0 -translate-x-[120%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden flex flex-col items-center justify-around shadow ${
             !colorMenuVisible && "hidden"
           }`}
         >

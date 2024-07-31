@@ -104,7 +104,7 @@ const Items = ({ onItemClick }) => {
             y: 999,
             w: 2,
             h: 4,
-            minH: 2,
+            minH: 3,
             minW: 2,
             maxH: 8,
             maxW: 6,
