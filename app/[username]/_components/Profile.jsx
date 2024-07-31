@@ -24,6 +24,7 @@ const Profile = ({ name, bio, image, socialLinks }) => {
                 sizes="(max-width: 640px) 130px, (max-width: 1024px) 175px, 200px"
                 className="rounded-full object-cover"
                 priority
+                unoptimized={true}
               />
             )}
           </div>

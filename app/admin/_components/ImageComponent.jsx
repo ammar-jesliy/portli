@@ -139,6 +139,7 @@ const ImageComponent = ({ id, remove }) => {
           alt="Image"
           fill
           className="rounded-[25px] object-cover"
+          unoptimized={true}
         />
       )}
     </div>

@@ -13,6 +13,7 @@ const ImageComponent = ({ data }) => {
           fill
           sizes="100%"
           className="rounded-[25px] object-cover"
+          unoptimized={true}
         />
       )}
     </div>

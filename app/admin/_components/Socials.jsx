@@ -13,7 +13,7 @@ import {
   SiSnapchat,
   SiTiktok,
 } from "@icons-pack/react-simple-icons";
-import { Share2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { db } from "../../../utils";
 import { useUser } from "@clerk/nextjs";
 import { userInfo, userSocials } from "../../../utils/schema";
@@ -113,7 +113,7 @@ const Socials = () => {
               className="w-10 h-10 rounded-full flex items-center justify-center"
               style={{ background: iconMap[platform].color }}
             >
-              <IconComponent color="#ffffff" size={18} />
+              <IconComponent color="#ffffff" size={17} />
             </a>
           )
         );
@@ -121,11 +121,11 @@ const Socials = () => {
 
       {/* Add socials modal */}
       <button
-        className="btn btn-sm btn-neutral py-0 h-10 rounded-full flex items-center justify-center"
+        className="btn btn-sm btn-neutral py-0 px-0 h-10 w-10 rounded-full flex items-center justify-center"
         onClick={() => document.getElementById("socials_modal").showModal()}
       >
-        <Plus size={18} />
-        <p className="font-bold font-sans">Edit Socials</p>
+        <Plus size={17} />
+        {/* <p className="font-bold font-sans">Edit Socials</p> */}
       </button>
       {/* Open the modal*/}
       <dialog id="socials_modal" className="modal modal-bottom sm:modal-middle">
