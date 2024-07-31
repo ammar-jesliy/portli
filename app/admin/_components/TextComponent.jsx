@@ -40,26 +40,22 @@ const TextComponent = ({ id, remove }) => {
     }
   };
 
-  const handleTitleInput = (title) => {
-    clearTimeout(timeoutId);
+  const handleTitleInput = async (title) => {
+    const data = {
+      title: title,
+      text: componentData[id]?.text,
+      titleVisible: true,
+      color: componentData[id]?.color,
+    };
 
-    timeoutId = setTimeout(async () => {
-      const data = {
-        title: title,
-        text: componentData[id]?.text,
-        titleVisible: true,
-        color: componentData[id]?.color,
-      };
+    const result = await db
+      .update(components)
+      .set({ data: JSON.stringify(data) })
+      .where(eq(components.componentId, id));
 
-      const result = await db
-        .update(components)
-        .set({ data: JSON.stringify(data) })
-        .where(eq(components.componentId, id));
-
-      if (result) {
-        updateComponentData(id, { title });
-      }
-    }, 2000);
+    if (result) {
+      updateComponentData(id, { title });
+    }
   };
 
   const handleTextInput = async (text) => {
@@ -225,7 +221,7 @@ const TextComponent = ({ id, remove }) => {
             placeholder="Add title..."
             spellCheck="false"
             defaultValue={componentData[id]?.title}
-            onChange={(e) => handleTitleInput(e.target.value)}
+            onBlur={(e) => handleTitleInput(e.target.value)}
             className={`input input-sm w-full focus:outline-none bg-transparent text-base font-bold`}
           />
         </div>
