@@ -32,7 +32,7 @@ const TaskBar = () => {
   };
 
   const copyToClipboard = async () => {
-    const url = "https://portli.me/" + userDetails[0]?.username;
+    const url = "https://portli.vercel.app/" + userDetails[0]?.username;
 
     try {
       await navigator.clipboard.writeText(url)
