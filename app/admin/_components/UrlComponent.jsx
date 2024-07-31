@@ -7,7 +7,6 @@ import { ExternalLink, Link, Move, Trash, X } from "lucide-react";
 import { db } from "../../../utils";
 import { components } from "../../../utils/schema";
 import { eq } from "drizzle-orm";
-import { toast } from "react-toastify";
 import { AdminContext } from "../../_context/AdminContext";
 
 const UrlComponent = ({ id, remove }) => {
@@ -29,7 +28,6 @@ const UrlComponent = ({ id, remove }) => {
   }, []);
 
   const fetchOgData = async () => {
-    console.log("fetching og data");
     try {
       const response = await fetch("/api/fetch-og-data", {
         method: "POST",
@@ -41,7 +39,6 @@ const UrlComponent = ({ id, remove }) => {
       const data = await response.json();
       if (response.ok) {
         setFetchedOgData(data);
-        console.log(data);
         setError(null);
       } else {
         setError(data.error);
@@ -66,7 +63,6 @@ const UrlComponent = ({ id, remove }) => {
 
     if (result.length > 0) {
       updateComponentData(id, result[0].data);
-      console.log(id + " - " + result[0]?.data);
     } else {
       updateComponentData(id, {});
       console.log("No data found");
@@ -81,8 +77,6 @@ const UrlComponent = ({ id, remove }) => {
     } else {
       title = fetchedOgData?.metaTags["og:title"];
     }
-
-    console.log(title);
 
     const data = {
       url: url,
@@ -121,13 +115,6 @@ const UrlComponent = ({ id, remove }) => {
 
     if (result) {
       updateComponentData(id, { color });
-      toast.success("Color updated successfully", {
-        position: "top-right",
-      });
-    } else {
-      toast.error("Failed to update color", {
-        position: "top-right",
-      });
     }
   };
 
@@ -205,7 +192,11 @@ const UrlComponent = ({ id, remove }) => {
                 ></div>
               )}
             </button>
-            <a href={componentData[id]?.url} target="_blank" className="btn btn-sm btn-ghost px-2">
+            <a
+              href={componentData[id]?.url}
+              target="_blank"
+              className="btn btn-sm btn-ghost px-2"
+            >
               <ExternalLink size={16} />
             </a>
           </>

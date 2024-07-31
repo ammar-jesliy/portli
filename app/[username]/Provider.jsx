@@ -38,8 +38,6 @@ const UserPageProvider = ({ children }) => {
       .from(userInfo)
       .where(eq(userInfo.username, pathname.split("/")[1]));
 
-    console.log(result);
-
     if (result.length > 0) {
       setUserDetails(result);
     }
@@ -83,9 +81,7 @@ const UserPageProvider = ({ children }) => {
     <UserPageContext.Provider
       value={{ userDetails, socials, layouts, userComponents, isFetching }}
     >
-      <div data-theme={userDetails[0]?.theme}>
-        {children}
-      </div>
+      <div data-theme={userDetails[0]?.theme}>{children}</div>
     </UserPageContext.Provider>
   );
 };

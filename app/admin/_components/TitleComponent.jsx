@@ -3,7 +3,6 @@
 import { useState, useEffect, useContext } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
 import { AlignCenter, AlignLeft, AlignRight, Trash, Move } from "lucide-react";
-import { toast } from "react-toastify";
 import { components } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
@@ -13,7 +12,7 @@ const TitleComponent = ({ id, remove }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { componentData, updateComponentData } = useContext(AdminContext)
+  const { componentData, updateComponentData } = useContext(AdminContext);
 
   let timeoutId;
 
@@ -29,7 +28,7 @@ const TitleComponent = ({ id, remove }) => {
 
     if (result.length > 0) {
       const data = result[0].data;
-      updateComponentData(id, data)
+      updateComponentData(id, data);
     }
   };
 
@@ -45,14 +44,7 @@ const TitleComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      updateComponentData(id, { alignment })
-      toast.success("Alignment updated successfully", {
-        position: "top-right",
-      });
-    } else {
-      toast.error("Failed to update alignment", {
-        position: "top-right",
-      });
+      updateComponentData(id, { alignment });
     }
   };
 
@@ -60,11 +52,9 @@ const TitleComponent = ({ id, remove }) => {
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(async () => {
-      console.log("Updating Title...");
-
       const data = {
         title: title,
-        alignment: componentData[id]?.alignment
+        alignment: componentData[id]?.alignment,
       };
 
       const result = await db
@@ -73,14 +63,7 @@ const TitleComponent = ({ id, remove }) => {
         .where(eq(components.componentId, id));
 
       if (result) {
-        updateComponentData(id, { title })
-        toast.success("Title updated successfully", {
-          position: "top-right",
-        });
-      } else {
-        toast.error("Failed to update title", {
-          position: "top-right",
-        });
+        updateComponentData(id, { title });
       }
     }, 1000);
   };

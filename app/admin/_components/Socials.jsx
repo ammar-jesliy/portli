@@ -18,7 +18,6 @@ import { db } from "../../../utils";
 import { useUser } from "@clerk/nextjs";
 import { userInfo, userSocials } from "../../../utils/schema";
 import { eq, and } from "drizzle-orm";
-import { toast } from "react-toastify";
 import { AdminContext } from "../../_context/AdminContext";
 import iconData from "../../_data/iconData";
 
@@ -95,9 +94,6 @@ const Socials = () => {
 
       await Promise.all(operations);
       getExistingSocials();
-      toast.success("Social links saved successfully", {
-        position: "top-right",
-      });
     } catch (error) {
       console.error("Failed to save social links", error);
       // Handle error appropriately

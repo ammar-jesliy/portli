@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
 import { Move, Trash, X } from "lucide-react";
 import DeleteComponentModal from "./DeleteComponentModal";
-import { toast } from "react-toastify";
 import { components } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
@@ -15,7 +14,7 @@ const TextComponent = ({ id, remove }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [colorMenuVisible, setColorMenuVisible] = useState(false);
 
-  const { componentData, updateComponentData } = useContext(AdminContext)
+  const { componentData, updateComponentData } = useContext(AdminContext);
 
   let timeoutId;
 
@@ -36,7 +35,7 @@ const TextComponent = ({ id, remove }) => {
 
       if (!data) {
         const titleVisible = true;
-        updateComponentData(id, { titleVisible })
+        updateComponentData(id, { titleVisible });
       }
     }
   };
@@ -45,8 +44,6 @@ const TextComponent = ({ id, remove }) => {
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(async () => {
-      console.log("Updating Title...");
-
       const data = {
         title: title,
         text: componentData[id]?.text,
@@ -60,47 +57,27 @@ const TextComponent = ({ id, remove }) => {
         .where(eq(components.componentId, id));
 
       if (result) {
-        updateComponentData(id, { title })
-        toast.success("Title updated successfully", {
-          position: "top-right",
-        });
-      } else {
-        toast.error("Failed to update title", {
-          position: "top-right",
-        });
+        updateComponentData(id, { title });
       }
     }, 2000);
   };
 
   const handleTextInput = async (text) => {
-    // clearTimeout(timeoutId);
+    const data = {
+      title: componentData[id]?.title,
+      text: text,
+      titleVisible: componentData[id]?.titleVisible,
+      color: componentData[id]?.color,
+    };
 
-    // timeoutId = setTimeout(async () => {
-      console.log("Updating Text...");
+    const result = await db
+      .update(components)
+      .set({ data: JSON.stringify(data) })
+      .where(eq(components.componentId, id));
 
-      const data = {
-        title: componentData[id]?.title,
-        text: text,
-        titleVisible: componentData[id]?.titleVisible,
-        color: componentData[id]?.color,
-      };
-
-      const result = await db
-        .update(components)
-        .set({ data: JSON.stringify(data) })
-        .where(eq(components.componentId, id));
-
-      if (result) {
-        updateComponentData(id, { text })
-        toast.success("Text updated successfully", {
-          position: "top-right",
-        });
-      } else {
-        toast.error("Failed to update text", {
-          position: "top-right",
-        });
-      }
-    // }, 2000);
+    if (result) {
+      updateComponentData(id, { text });
+    }
   };
 
   const handleDeleteTitle = async () => {
@@ -117,14 +94,7 @@ const TextComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      updateComponentData(id, data)
-      toast.success("Title removed successfully", {
-        position: "top-right",
-      });
-    } else {
-      toast.error("Failed to remove title", {
-        position: "top-right",
-      });
+      updateComponentData(id, data);
     }
   };
 
@@ -142,20 +112,15 @@ const TextComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      updateComponentData(id, { color })
-      toast.success("Color updated successfully", {
-        position: "top-right",
-      });
-    } else {
-      toast.error("Failed to update color", {
-        position: "top-right",
-      });
+      updateComponentData(id, { color });
     }
   };
 
   return (
     <div
-      className={`${componentData[id]?.color || 'bg-base-300'} w-full h-full rounded-[25px] group flex items-center justify-center transition-colors duration-300 p-4 flex-col gap-3`}
+      className={`${
+        componentData[id]?.color || "bg-base-300"
+      } w-full h-full rounded-[25px] group flex items-center justify-center transition-colors duration-300 p-4 flex-col gap-3`}
     >
       <ComponentMenuBar orientation={"vertical"}>
         <div
@@ -216,7 +181,11 @@ const TextComponent = ({ id, remove }) => {
           {colorMenuVisible ? (
             <X size={16} />
           ) : (
-            <div className={`h-4 w-4 rounded-full ${componentData[id]?.color || 'bg-base-300'}`}></div>
+            <div
+              className={`h-4 w-4 rounded-full ${
+                componentData[id]?.color || "bg-base-300"
+              }`}
+            ></div>
           )}
         </button>
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
@@ -276,7 +245,7 @@ const TextComponent = ({ id, remove }) => {
           spellCheck="false"
           defaultValue={componentData[id]?.text}
           onBlur={(e) => handleTextInput(e.target.value)}
-          className="w-full h-full font-medium textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight"
+          className="w-full h-full font-medium textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight scrollbar-hidden"
         ></textarea>
       </div>
     </div>

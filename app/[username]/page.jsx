@@ -13,12 +13,6 @@ const UserPage = () => {
   const { userDetails, socials, layouts, userComponents, isFetching } =
     useContext(UserPageContext);
 
-  console.log(socials);
-  console.log(layouts);
-  console.log(userComponents);
-
-  console.log(isFetching)
-
   if (isFetching) {
     return <Loading />;
   } else if (userDetails.length === 0) {

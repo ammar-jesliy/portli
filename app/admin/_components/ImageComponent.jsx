@@ -35,7 +35,7 @@ const ImageComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result.length > 0) {
-      const data = result[0].data
+      const data = result[0].data;
       updateComponentData(id, data);
     }
   };
@@ -52,8 +52,6 @@ const ImageComponent = ({ id, remove }) => {
         .catch((error) => {
           console.error("Error deleting existing image", error);
         });
-
-      console.log(componentData[id]?.filename);
     }
 
     // Upload new profile image
@@ -68,7 +66,6 @@ const ImageComponent = ({ id, remove }) => {
       "." +
       file.type.split("/")[1];
 
-    console.log(filename);
     const data = { filename: filename };
 
     const storageRef = ref(storage, filename);
@@ -84,13 +81,6 @@ const ImageComponent = ({ id, remove }) => {
 
       if (result) {
         updateComponentData(id, { filename });
-        toast.success("Image updated successfully", {
-          position: "top-right",
-        });
-      } else {
-        toast.error("Failed to update image", {
-          position: "top-right",
-        });
       }
     });
   };

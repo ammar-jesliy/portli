@@ -29,7 +29,6 @@ const Profile = () => {
   let timeoutId;
 
   const handleNameInput = (name) => {
-
     if (name.length === 0) {
       toast.info("Please Enter a name", {
         position: "top-right",
@@ -39,8 +38,6 @@ const Profile = () => {
 
     clearTimeout(timeoutId);
     timeoutId = setTimeout(async () => {
-      console.log("Updating name...");
-
       const result = await db
         .update(userInfo)
         .set({ name: name })
@@ -59,7 +56,6 @@ const Profile = () => {
     }, 2000);
   };
 
-
   const handleBioInput = (bio) => {
     const lineCount = bio.split(/\r\n|\r|\n/).length;
 
@@ -77,8 +73,6 @@ const Profile = () => {
 
     clearTimeout(timeoutId);
     timeoutId = setTimeout(async () => {
-      console.log("Updating bio...");
-
       const result = await db
         .update(userInfo)
         .set({ bio: bio })
@@ -98,7 +92,6 @@ const Profile = () => {
   };
 
   const handleFileUpload = async (e) => {
-
     // Delete existing profile image
     if (profileImage) {
       const existingRef = ref(storage, profileImage.split("?")[0]);
@@ -108,10 +101,8 @@ const Profile = () => {
           console.log("Deleted existing profile image");
         })
         .catch((error) => {
-          console.error("Error deleting existing profile image", error); 
-        })
-
-      console.log(profileImage)
+          console.error("Error deleting existing profile image", error);
+        });
     }
 
     // Upload new profile image
@@ -122,8 +113,6 @@ const Profile = () => {
       Date.now().toString() +
       "." +
       file.type.split("/")[1];
-
-    console.log(filename);
 
     const storageRef = ref(storage, filename);
 
@@ -167,9 +156,7 @@ const Profile = () => {
         >
           <div
             className={`w-[130px] h-[130px] bg-base-100 rounded-full relative group ${
-              displayMode === "mobile"
-                ? `mt-0`
-                : `lg:h-[200px] lg:w-[200px]`
+              displayMode === "mobile" ? `mt-0` : `lg:h-[200px] lg:w-[200px]`
             }`}
           >
             {profileImage && (
@@ -180,7 +167,7 @@ const Profile = () => {
                 sizes="(max-width: 640px) 130px, (max-width: 1024px) 175px, 200px"
                 className="rounded-full object-cover"
                 priority
-                unoptimized
+                unoptimized={true}
               />
             )}
             <label htmlFor="profile-input" className=" cursor-pointer">
