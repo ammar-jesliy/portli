@@ -30,10 +30,10 @@ const Profile = ({ name, bio, image, socialLinks }) => {
           </div>
         </div>
         <div className="flex flex-[3] flex-col justify-center">
-          <p className={`text-xl font-normal font-poppins lg:text-2xl lg:py-2`}>
+          <p className={`text-[28px] font-normal font-poppins tracking-tighter lg:text-2xl lg:py-2`}>
             {name}
           </p>
-          <p className="font-poppins leading-tight text-sm max-w-[500px] lg:text-base opacity-70 font-normal min-h-12 h-24 mb-4">
+          <p className="font-poppins leading-tight text-xs max-w-[500px] lg:text-base opacity-70 font-normal min-h-12 h-24 mb-4">
             {bio}
           </p>
 

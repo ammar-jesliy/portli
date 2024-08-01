@@ -113,7 +113,7 @@ const Socials = () => {
               className="w-10 h-10 rounded-full flex items-center justify-center"
               style={{ background: iconMap[platform].color }}
             >
-              <IconComponent color="#ffffff" size={17} />
+              <IconComponent color="#ffffff" size={18} />
             </a>
           )
         );
