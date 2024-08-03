@@ -1,9 +1,16 @@
 import React from "react";
-import { ALargeSmall, Image, Heading, MapPinned, BetweenHorizontalStart, Link2 } from "lucide-react";
+import {
+  ALargeSmall,
+  Image,
+  Heading,
+  MapPinned,
+  BetweenHorizontalStart,
+  Link2,
+} from "lucide-react";
 
 const Items = ({ onItemClick }) => {
   return (
-    <div className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-2 border-base-300 gap-1 animate-slide-up">
+    <div className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 gap-1 animate-slide-up">
       <button
         className="btn btn-ghost px-2 justify-start"
         onClick={() => {

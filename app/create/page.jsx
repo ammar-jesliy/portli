@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState, useEffect} from "react";
-import { ArrowRight } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { ArrowRight } from "lucide-react";
 import { toast } from "react-toastify";
 import { db } from "../../utils";
 import { eq } from "drizzle-orm";
@@ -10,10 +10,9 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 const createPage = () => {
-
   const router = useRouter();
   const { user } = useUser();
-  const [sitename, setSitename] = useState('');
+  const [sitename, setSitename] = useState("");
 
   useEffect(() => {
     user && checkUser();
@@ -33,49 +32,52 @@ const createPage = () => {
   const checkValidUsername = (sitename) => {
     const allowedChars = /^[a-zA-Z0-9-_]+$/;
     return allowedChars.test(sitename);
-  }
+  };
 
   const checkUsernameExists = async (sitename) => {
-    const result = await db.select().from(userInfo).where(eq(userInfo.username, sitename));
+    const result = await db
+      .select()
+      .from(userInfo)
+      .where(eq(userInfo.username, sitename));
 
     return result.length > 0;
-  }
+  };
 
   const onCreateButtonClick = async () => {
     if (sitename.length > 30) {
       toast.error("Site-name must be less than 30 characters", {
-        position: "top-right"
+        position: "top-right",
       });
 
-      return ;
+      return;
     } else if (!checkValidUsername(sitename)) {
       toast.error("Site-name can only contain letters, numbers, and hyphens", {
-        position: "top-right"
+        position: "top-right",
       });
 
-      return ;
+      return;
     } else if (await checkUsernameExists(sitename)) {
       toast.error("Site-name already exists", {
-        position: "top-right"
+        position: "top-right",
       });
+
+      return;
     }
 
-    const result = await db.insert(userInfo)
-    .values({
+    const result = await db.insert(userInfo).values({
       name: user?.fullName,
       email: user?.primaryEmailAddress.emailAddress,
-      username: sitename
-    })
+      username: sitename,
+    });
 
     if (result) {
       toast.success("Site created successfully", {
-        position: "top-right"
+        position: "top-right",
       });
 
       router.replace("/admin");
     }
-
-  }
+  };
 
   return (
     <>
@@ -92,19 +94,21 @@ const createPage = () => {
           <div className="flex gap-2">
             <label className="input flex items-center gap-[2px] bg-base-300 min-w-52 max-w-80 w-[70vw]">
               portli.me/
-              <input 
-                type="text" 
-                className="grow" 
+              <input
+                type="text"
+                className="grow"
                 placeholder="site-name"
                 spellCheck="false"
-                onChange={(e) => setSitename(e.target.value)} 
+                onChange={(e) => setSitename(e.target.value)}
               />
             </label>
-            <button 
-              disabled={!sitename} 
+            <button
+              disabled={!sitename}
               className="btn btn-primary"
               onClick={() => onCreateButtonClick()}
-            ><ArrowRight /></button>
+            >
+              <ArrowRight />
+            </button>
           </div>
         </div>
       </div>

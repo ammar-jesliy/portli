@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useContext } from "react";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutPanelTop,
@@ -15,14 +15,18 @@ import {
 } from "lucide-react";
 import Themes from "./Themes";
 import Items from "./Items";
+import Settings from "./Settings"
 import { AdminContext } from "../../_context/AdminContext";
 import { toast } from "react-toastify";
 
 const TaskBar = () => {
   const [showItems, setShowItems] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
+  const [showSettings, setShowSettings] = useState(false)
   const pathname = usePathname();
   const router = useRouter();
+
+  const { user } = useUser()
 
   const { displayMode, setDisplayMode, addComponent, userDetails } =
     useContext(AdminContext);
@@ -50,6 +54,8 @@ const TaskBar = () => {
       {showItems && <Items onItemClick={addComponent} />}
 
       {showThemes && <Themes />}
+
+      {showSettings && <Settings />}
 
       {pathname === "/admin" ? (
         <>
@@ -133,6 +139,7 @@ const TaskBar = () => {
         onClick={() => {
           setShowItems(false);
           setShowThemes(false);
+          setShowSettings(false)
           router.push("/admin/analytics");
         }}
       >
@@ -147,6 +154,7 @@ const TaskBar = () => {
         onClick={() => {
           setShowItems(false);
           setShowThemes(false);
+          setShowSettings(false)
           router.push("/admin/templates");
         }}
       >
@@ -162,7 +170,14 @@ const TaskBar = () => {
         Copy Link
       </button>
 
-      <UserButton />
+      <button 
+        className="rounded-full w-7 h-7 hover:opacity-90"
+        onClick={() => setShowSettings(!showSettings)}
+      >
+        <img src={user?.imageUrl} alt="" className="w-full h-full object-cover rounded-full"/>
+      </button>
+
+      {/* <UserButton /> */}
     </div>
   );
 };
