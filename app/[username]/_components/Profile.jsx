@@ -18,7 +18,7 @@ const Profile = ({ name, bio, image, socialLinks }) => {
           >
             {image && (
               <Image
-                src={BASE_URL + image}
+                src={BASE_URL + image.replace("/", "%2f") + "?alt=media"}
                 alt="Profile Image"
                 fill
                 sizes="(max-width: 640px) 130px, (max-width: 1024px) 175px, 200px"
@@ -30,7 +30,9 @@ const Profile = ({ name, bio, image, socialLinks }) => {
           </div>
         </div>
         <div className="flex flex-[3] flex-col justify-center">
-          <p className={`text-[28px] font-normal font-poppins tracking-tighter lg:text-2xl lg:py-2`}>
+          <p
+            className={`text-[28px] font-normal font-poppins tracking-tighter lg:text-2xl lg:py-2`}
+          >
             {name}
           </p>
           <p className="font-poppins leading-tight text-xs max-w-[500px] lg:text-base opacity-70 font-normal min-h-12 h-24 mb-4">

@@ -8,7 +8,7 @@ const ImageComponent = ({ data }) => {
     <div className="w-full relative h-full rounded-[25px] bg-base-300">
       {data?.filename && (
         <Image
-          src={BASE_URL + data?.filename + "?alt=media"}
+          src={BASE_URL + data?.filename.replace("/", "%2f") + "?alt=media"}
           alt="Image"
           fill
           sizes="100%"
