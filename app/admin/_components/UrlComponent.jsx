@@ -124,7 +124,10 @@ const UrlComponent = ({ id, remove }) => {
         componentData[id]?.color || "bg-base-300"
       } group`}
     >
-      <ComponentMenuBar orientation={"vertical"}>
+      <ComponentMenuBar
+        orientation={"vertical"}
+        subMenuVisible={colorMenuVisible || modalVisible}
+      >
         <div
           className={`absolute w-full h-full left-0 top-0 -translate-x-[120%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden flex flex-col items-center justify-around shadow ${
             !colorMenuVisible && "hidden"
@@ -180,7 +183,10 @@ const UrlComponent = ({ id, remove }) => {
           <>
             <button
               className="btn btn-sm btn-ghost px-2"
-              onClick={() => setColorMenuVisible(!colorMenuVisible)}
+              onClick={() => {
+                setColorMenuVisible(!colorMenuVisible);
+                setModalVisible(false);
+              }}
             >
               {colorMenuVisible ? (
                 <X size={16} />
@@ -204,7 +210,10 @@ const UrlComponent = ({ id, remove }) => {
         <div className="h-[1px] w-[16px] bg-gray-300 rounded-full my-1"></div>
         <button
           className="btn btn-sm btn-ghost px-2 text-red-600"
-          onClick={() => setModalVisible(!modalVisible)}
+          onClick={() => {
+            setModalVisible(!modalVisible);
+            setColorMenuVisible(false)
+          }}
         >
           <Trash size={16} />
         </button>

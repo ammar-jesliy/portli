@@ -87,7 +87,7 @@ const ImageComponent = ({ id, remove }) => {
 
   return (
     <div className="w-full h-full rounded-[25px] flex items-center justify-center group bg-base-300">
-      <ComponentMenuBar orientation={"vertical"}>
+      <ComponentMenuBar orientation={"vertical"} subMenuVisible={modalVisible}>
         <button
           className={`btn btn-sm btn-ghost px-2 drag-handle text-gray-800 ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
