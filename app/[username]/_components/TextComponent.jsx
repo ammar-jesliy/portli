@@ -8,9 +8,9 @@ const TextComponent = ({ data }) => {
       {data?.titleVisible && (
         <h3
           className={`text-base font-bold px-3 h-8 line-clamp-1 text-ellipsis ${
-            data?.color && data?.color === "bg-accent"
+            data?.color && (data?.color === "bg-accent"
               ? "text-primary-content"
-              : "text-" + data?.color.split("-")[1] + "-content"
+              : "text-" + data?.color.split("-")[1] + "-content")
           }`}
         >
           {data?.title}
