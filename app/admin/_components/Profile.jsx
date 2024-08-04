@@ -110,6 +110,8 @@ const Profile = () => {
 
     const filename =
       userDetails[0]?.username +
+      "/" +
+      "profile-" +
       Date.now().toString() +
       "." +
       file.type.split("/")[1];
@@ -122,11 +124,11 @@ const Profile = () => {
 
       const result = await db
         .update(userInfo)
-        .set({ profileImage: filename + "?alt=media" })
+        .set({ profileImage: filename })
         .where(eq(userInfo.email, user?.primaryEmailAddress.emailAddress));
 
       if (result) {
-        setProfileImage(filename + "?alt=media");
+        setProfileImage(filename);
         refreshUserDetails();
         toast.success("Profile image updated successfully", {
           position: "top-right",
@@ -161,7 +163,7 @@ const Profile = () => {
           >
             {profileImage && (
               <Image
-                src={BASE_URL + profileImage}
+                src={BASE_URL + profileImage.replace("/", "%2f") + "?alt=media"}
                 alt="Profile Image"
                 fill
                 sizes="(max-width: 640px) 130px, (max-width: 1024px) 175px, 200px"

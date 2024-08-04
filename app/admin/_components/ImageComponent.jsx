@@ -59,7 +59,7 @@ const ImageComponent = ({ id, remove }) => {
 
     const filename =
       userDetails[0]?.username +
-      "-" +
+      "/" +
       id +
       "-" +
       Date.now().toString() +
@@ -135,7 +135,7 @@ const ImageComponent = ({ id, remove }) => {
       />
       {componentData[id]?.filename && (
         <Image
-          src={BASE_URL + componentData[id]?.filename + "?alt=media"}
+          src={BASE_URL + componentData[id]?.filename.replace("/", "%2f") + "?alt=media"}
           alt="Image"
           fill
           className="rounded-[25px] object-cover"

@@ -13,15 +13,48 @@ import { eq } from "drizzle-orm";
 import { AdminContext } from "../../_context/AdminContext";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { storage } from "../../../utils/firebaseConfig";
+import { deleteObject, getStorage, listAll, ref } from "firebase/storage";
 
 const Settings = () => {
   const { user } = useUser();
   const { userDetails } = useContext(AdminContext);
   const router = useRouter();
 
+  // Delete user image files from firebase storage
+  const deleteUserFiles = async (username) => {
+    const listRef = ref(storage, username);
+
+    try {
+      listAll(listRef).then((res) => {
+        let filenames = [];
+        res.items.map((item) => {
+          filenames = [...filenames, item.fullPath];
+        });
+        console.log(filenames);
+
+        filenames.map(async (file) => {
+          let imageRef = ref(storage, file);
+
+          deleteObject(imageRef)
+            .then(() => {
+              console.log(file + " has been deleted");
+            })
+            .catch((error) => {
+              console.log("Error deleting " + file + " " + error);
+            });
+        });
+        console.log("All files have been deleted");
+      });
+    } catch (error) {
+      console.log("Error in deleting files", error);
+    }
+  };
+
   const handleDeleteAccount = async () => {
     try {
       router.replace("/");
+      await deleteUserFiles(userDetails[0]?.username);
 
       await db
         .delete(userSocials)

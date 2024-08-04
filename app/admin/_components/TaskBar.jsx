@@ -15,22 +15,22 @@ import {
 } from "lucide-react";
 import Themes from "./Themes";
 import Items from "./Items";
-import Settings from "./Settings"
+import Settings from "./Settings";
 import { AdminContext } from "../../_context/AdminContext";
 import { toast } from "react-toastify";
 
 const TaskBar = () => {
   const [showItems, setShowItems] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
-  const [showSettings, setShowSettings] = useState(false)
+  const [showSettings, setShowSettings] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  const { user } = useUser()
+  const { user } = useUser();
 
   const { displayMode, setDisplayMode, addComponent, userDetails } =
     useContext(AdminContext);
- 
+
   const isActive = (path) => {
     return pathname === path;
   };
@@ -39,15 +39,14 @@ const TaskBar = () => {
     const url = "https://portli.vercel.app/" + userDetails[0]?.username;
 
     try {
-      await navigator.clipboard.writeText(url)
+      await navigator.clipboard.writeText(url);
       toast.success("Link copied to Clipboard", {
-        position: "top-right"
+        position: "top-right",
       });
     } catch (error) {
-      console.log("failed to copy text: ", error)
+      console.log("failed to copy text: ", error);
     }
-
-  }
+  };
 
   return (
     <div className="flex items-center fixed bottom-7 h-[60px] w-max bg-base-100 left-1/2 translate-x-[-50%] rounded-2xl shadow-[0px_5px_9px_0px_rgba(0,0,0,0.25)] border-1 border-base-300 sm:px-5 px-[10px] sm:gap-1 gap-1 z-10">
@@ -83,8 +82,9 @@ const TaskBar = () => {
           <button
             className="btn btn-neutral bg-black btn-sm w-[75px] sm:w-[110px] flex-nowrap px-2 sm:px-3"
             onClick={() => {
-              setShowThemes(false);
               setShowItems(!showItems);
+              setShowThemes(false);
+              setShowSettings(false);
             }}
           >
             {showItems ? (
@@ -108,8 +108,9 @@ const TaskBar = () => {
             }  sm:tooltip tooltip-top px-1 sm:px-2 transition`}
             data-tip="Themes"
             onClick={() => {
-              setShowItems(false);
               setShowThemes(!showThemes);
+              setShowItems(false);
+              setShowSettings(false);
             }}
           >
             {showThemes ? (
@@ -139,7 +140,7 @@ const TaskBar = () => {
         onClick={() => {
           setShowItems(false);
           setShowThemes(false);
-          setShowSettings(false)
+          setShowSettings(false);
           router.push("/admin/analytics");
         }}
       >
@@ -154,7 +155,7 @@ const TaskBar = () => {
         onClick={() => {
           setShowItems(false);
           setShowThemes(false);
-          setShowSettings(false)
+          setShowSettings(false);
           router.push("/admin/templates");
         }}
       >
@@ -163,18 +164,22 @@ const TaskBar = () => {
 
       <div className="h-1/3 w-[3px] bg-base-300 rounded-full sm:mx-1"></div>
 
-      <button 
+      <button
         className="btn btn-sm px-2 sm:px-3 font-poppins text-xs bg-primaryLightBlue text-white hover:bg-primaryLightBlue/80 mx-1"
         onClick={copyToClipboard}
       >
         Copy Link
       </button>
 
-      <button 
+      <button
         className="rounded-full w-7 h-7 hover:opacity-90"
         onClick={() => setShowSettings(!showSettings)}
       >
-        <img src={user?.imageUrl} alt="" className="w-full h-full object-cover rounded-full"/>
+        <img
+          src={user?.imageUrl}
+          alt=""
+          className="w-full h-full object-cover rounded-full"
+        />
       </button>
 
       {/* <UserButton /> */}
