@@ -302,7 +302,7 @@ const UrlComponent = ({ id, remove }) => {
               </p>
             </div>
             {componentData[id]?.image ? (
-              <div className="w-full aspect-[13/6] bg-base-200/50 rounded-[10px] overflow-hidden">
+              <div className="w-full aspect-[12/6.3] bg-base-200/50 rounded-[10px] overflow-hidden">
                 <img
                   src={componentData[id]?.image}
                   alt="OG image"
@@ -310,7 +310,7 @@ const UrlComponent = ({ id, remove }) => {
                 />
               </div>
             ) : (
-              <div className="w-full aspect-[13/6] bg-base-200/50 rounded-[10px] overflow-hidden flex items-center justify-center">
+              <div className="w-full aspect-[12/6.3] bg-base-200/50 rounded-[10px] overflow-hidden flex items-center justify-center">
                 <img
                   src={componentData[id]?.favicon}
                   alt="No image found"

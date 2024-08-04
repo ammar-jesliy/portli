@@ -7,24 +7,26 @@ import "leaflet/dist/leaflet.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-poppins",
 });
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-bricolage",
 });
 
 export const metadata = {
   title: "Portli",
-  description: "Micro site builder",
+  description:
+    "Build beautiful microsites in minutes with our easy drag-and-drop builder. Customize every detail to fit your brand and share your story with the world effortlessly",
   openGraph: {
     title: "Portli",
-    description: "Micro site builder",
+    description:
+      "Build beautiful microsites in minutes with our easy drag-and-drop builder. Customize every detail to fit your brand and share your story with the world effortlessly",
     url: "https://portli.vercel.app",
     images: [
       {
@@ -37,7 +39,8 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Portli",
-    description: "Micro site builder",
+    description:
+      "Build beautiful microsites in minutes with our easy drag-and-drop builder. Customize every detail to fit your brand and share your story with the world effortlessly",
     images: ["/portli-og-image.png"],
   },
 };
