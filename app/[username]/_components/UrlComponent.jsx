@@ -5,7 +5,9 @@ const UrlComponent = ({ data }) => {
     <>
       {data && (
         <div
-          className={`w-full h-full rounded-[25px] ${data?.color || 'bg-base-300'} bg-opacity-85 hover:bg-opacity-100`}
+          className={`w-full h-full rounded-[25px] ${
+            data?.color || "bg-base-300"
+          } bg-opacity-85 hover:bg-opacity-100`}
         >
           <a
             href={data?.url}
@@ -28,18 +30,20 @@ const UrlComponent = ({ data }) => {
                 <div className="flex-1 flex items-start justify-center flex-col">
                   <p
                     className={`text-base font-bold leading-tight line-clamp-1 text-ellipsis ${
-                      data?.color === "bg-accent"
+                      data?.color &&
+                      (data?.color === "bg-accent"
                         ? "text-primary-content"
-                        : "text-" + data?.color?.split("-")[1] + "-content"
+                        : "text-" + data?.color?.split("-")[1] + "-content")
                     }`}
                   >
                     {data?.title}
                   </p>
                   <p
                     className={`text-sm font-semibold opacity-70  ${
-                      data?.color === "bg-accent"
+                      data?.color &&
+                      (data?.color === "bg-accent"
                         ? "text-primary-content"
-                        : "text-" + data?.color?.split("-")[1] + "-content"
+                        : "text-" + data?.color?.split("-")[1] + "-content")
                     }`}
                   >
                     {data?.url?.split("/")[2]}
@@ -48,9 +52,10 @@ const UrlComponent = ({ data }) => {
               </div>
               <p
                 className={`text-xs font-medium leading-tight line-clamp-2 text-ellipsis px-2 ${
-                  data?.color === "bg-accent"
+                  data?.color &&
+                  (data?.color === "bg-accent"
                     ? "text-primary-content"
-                    : "text-" + data?.color?.split("-")[1] + "-content"
+                    : "text-" + data?.color?.split("-")[1] + "-content")
                 }`}
               >
                 {data?.description}
