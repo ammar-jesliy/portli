@@ -215,7 +215,7 @@ const TextComponent = ({ id, remove }) => {
         )}
       </ComponentMenuBar>
 
-      {componentData[id]?.titleVisible && (
+      {(componentData[id]?.titleVisible || !componentData[id]) && (
         <div
           className={`w-full hover:bg-base-content/20 rounded-[9px] relative ${
             componentData[id]?.color === "bg-accent"
@@ -224,7 +224,7 @@ const TextComponent = ({ id, remove }) => {
           }`}
         >
           <button
-            className="btn btn-xs border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full hidden group-hover:flex"
+            className="w-6 h-6 items-center justify-center border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-[-10px] top-[-10px] rounded-full hidden group-hover:flex"
             onClick={() => handleDeleteTitle()}
             data-tip="Remove Title"
           >
