@@ -12,6 +12,7 @@ import {
   ChevronDown,
   Brush,
   House,
+  X,
 } from "lucide-react";
 import Themes from "./Themes";
 import Items from "./Items";
@@ -172,14 +173,22 @@ const TaskBar = () => {
       </button>
 
       <button
-        className="rounded-full w-7 h-7 hover:opacity-90"
-        onClick={() => setShowSettings(!showSettings)}
+        className={`rounded-full w-7 h-7 flex items-center justify-center hover:opacity-90 ${showSettings && 'bg-black'}`}
+        onClick={() => {
+          setShowSettings(!showSettings)
+          setShowItems(false)
+          setShowThemes(false)
+        }}
       >
-        <img
-          src={user?.imageUrl}
-          alt=""
-          className="w-full h-full object-cover rounded-full"
-        />
+        {showSettings ? (
+          <ChevronDown size={20} color="white" />
+        ) : (
+          <img
+            src={user?.imageUrl}
+            alt=""
+            className="w-full h-full object-cover rounded-full"
+          />
+        )}
       </button>
 
       {/* <UserButton /> */}
