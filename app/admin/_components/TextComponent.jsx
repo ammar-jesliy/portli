@@ -250,7 +250,7 @@ const TextComponent = ({ id, remove }) => {
           spellCheck="false"
           defaultValue={componentData[id]?.text}
           onBlur={(e) => handleTextInput(e.target.value)}
-          className="w-full h-full font-medium textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight scrollbar-hidden"
+          className="w-full h-full font-medium textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight scrollbar-hidden whitespace-pre-wrap"
         ></textarea>
       </div>
     </div>

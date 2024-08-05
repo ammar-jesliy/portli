@@ -17,7 +17,7 @@ const TextComponent = ({ data }) => {
         </h3>
       )}
       <p
-        className={`text-sm font-medium px-3 flex-1 leading-tight ${
+        className={`text-sm font-medium px-3 flex-1 leading-tight whitespace-pre-wrap ${
           data?.color && (data?.color === "bg-accent"
             ? "text-primary-content"
             : "text-" + data?.color.split("-")[1] + "-content")
