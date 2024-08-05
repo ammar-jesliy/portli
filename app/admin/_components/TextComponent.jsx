@@ -16,7 +16,13 @@ const TextComponent = ({ id, remove }) => {
 
   const { componentData, updateComponentData } = useContext(AdminContext);
 
-  let timeoutId;
+  const [localText, setLocalText] = useState(componentData[id]?.text || "")
+  const [localTitle, setLocalTitle] = useState(componentData[id]?.title || "")
+
+  useEffect(() => {
+    setLocalText(componentData[id]?.text || "")
+    setLocalTitle(componentData[id]?.title || "")
+  }, [componentData, id])
 
   useEffect(() => {
     getData();
@@ -229,7 +235,8 @@ const TextComponent = ({ id, remove }) => {
             type="text"
             placeholder="Add title..."
             spellCheck="false"
-            defaultValue={componentData[id]?.title}
+            value={localTitle}
+            onChange={(e) => setLocalTitle(e.target.value)}
             onBlur={(e) => handleTitleInput(e.target.value)}
             className={`input input-sm w-full focus:outline-none bg-transparent text-base font-bold`}
           />
@@ -248,7 +255,8 @@ const TextComponent = ({ id, remove }) => {
           id="text"
           placeholder="Add text"
           spellCheck="false"
-          defaultValue={componentData[id]?.text}
+          value={localText}
+          onChange={(e) => setLocalText(e.target.value)}
           onBlur={(e) => handleTextInput(e.target.value)}
           className="w-full h-full font-medium textarea resize-none bg-transparent px-3 py-0 text-sm focus:outline-none rounded-[9px] leading-tight scrollbar-hidden whitespace-pre-wrap"
         ></textarea>

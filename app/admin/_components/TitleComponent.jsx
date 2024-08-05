@@ -11,10 +11,15 @@ import { AdminContext } from "../../_context/AdminContext";
 const TitleComponent = ({ id, remove }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
   const { componentData, updateComponentData } = useContext(AdminContext);
+  
+  const [localTitle, setLocalTitle] = useState(componentData[id]?.title || "")
 
   let timeoutId;
+
+  useEffect(() => {
+    setLocalTitle(componentData[id]?.title || "")
+  }, [componentData, id])
 
   useEffect(() => {
     getTitle();
@@ -48,10 +53,7 @@ const TitleComponent = ({ id, remove }) => {
     }
   };
 
-  const handleTitleInput = (title) => {
-    clearTimeout(timeoutId);
-
-    timeoutId = setTimeout(async () => {
+  const handleTitleInput = async (title) => {
       const data = {
         title: title,
         alignment: componentData[id]?.alignment,
@@ -65,7 +67,6 @@ const TitleComponent = ({ id, remove }) => {
       if (result) {
         updateComponentData(id, { title });
       }
-    }, 1000);
   };
 
   return (
@@ -145,8 +146,9 @@ const TitleComponent = ({ id, remove }) => {
           placeholder="Title..."
           className="input w-full input-sm focus:outline-none hover:bg-base-200 text-lg font-bold rounded-[9px]"
           style={{ textAlign: componentData[id]?.alignment }}
-          defaultValue={componentData[id]?.title}
-          onChange={(e) => handleTitleInput(e.target.value)}
+          value={localTitle}
+          onChange={(e) => setLocalTitle(e.target.value)}
+          onBlur={(e) => handleTitleInput(e.target.value)}
         />
       </div>
     </>
