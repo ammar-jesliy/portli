@@ -30,7 +30,7 @@ export const metadata = {
     url: "https://portli.vercel.app",
     images: [
       {
-        url: "/portli-og-image.png",
+        url: "/portli-og-image.jpg",
         width: 1200,
         height: 630,
       },
@@ -41,7 +41,7 @@ export const metadata = {
     title: "Portli",
     description:
       "Build beautiful microsites in minutes with our easy drag-and-drop builder. Customize every detail to fit your brand and share your story with the world effortlessly",
-    images: ["/portli-og-image.png"],
+    images: ["/portli-og-image.jpg"],
   },
 };
 
