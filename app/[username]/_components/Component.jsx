@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useContext } from "react";
 import TitleComponent from "./TitleComponent";
@@ -8,12 +8,14 @@ import ImageComponent from "./ImageComponent";
 import MapComponent from "./MapComponent";
 import { UserPageContext } from "../../_context/UserPageContext";
 import SpacerComponent from "./SpacerComponent";
+import DividerComponent from "./DividerComponent";
 
 const Component = ({ id, type }) => {
+  const { userComponents } = useContext(UserPageContext);
 
-  const { userComponents } = useContext(UserPageContext)
-
-  const data = userComponents.find((component) => component.componentId === id)?.data
+  const data = userComponents.find(
+    (component) => component.componentId === id
+  )?.data;
 
   const renderComponent = () => {
     switch (type) {
@@ -29,6 +31,8 @@ const Component = ({ id, type }) => {
         return <MapComponent data={data} />;
       case "spacer":
         return <SpacerComponent data={data} />;
+      case "divider":
+        return <DividerComponent data={data} />;
     }
   };
 

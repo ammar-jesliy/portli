@@ -35,7 +35,7 @@ const Profile = ({ name, bio, image, socialLinks }) => {
           >
             {name}
           </p>
-          <p className="font-poppins leading-tight text-xs max-w-[500px] lg:text-base opacity-70 font-normal min-h-12 h-24 mb-4">
+          <p className="font-poppins leading-tight text-xs max-w-[500px] lg:text-base opacity-70 font-normal min-h-12 h-24 mb-4 whitespace-pre-wrap">
             {bio}
           </p>
 

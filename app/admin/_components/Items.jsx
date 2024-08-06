@@ -6,6 +6,7 @@ import {
   MapPinned,
   BetweenHorizontalStart,
   Link2,
+  Minus,
 } from "lucide-react";
 
 const Items = ({ onItemClick }) => {
@@ -87,6 +88,25 @@ const Items = ({ onItemClick }) => {
         className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
+            i: "url-" + Date.now().toString(),
+            x: 0,
+            y: 999,
+            w: 2,
+            h: 4,
+            minH: 3,
+            minW: 2,
+            maxH: 8,
+            maxW: 6,
+          });
+        }}
+      >
+        <Link2 size={24} />
+        <p className="w-[55px] text-left">URL</p>
+      </button>
+      <button
+        className="btn btn-ghost px-2 justify-start"
+        onClick={() => {
+          onItemClick({
             i: "spacer-" + Date.now().toString(),
             x: 0,
             y: 999,
@@ -106,20 +126,21 @@ const Items = ({ onItemClick }) => {
         className="btn btn-ghost px-2 justify-start"
         onClick={() => {
           onItemClick({
-            i: "url-" + Date.now().toString(),
+            i: "divider-" + Date.now().toString(),
             x: 0,
             y: 999,
-            w: 2,
-            h: 4,
-            minH: 3,
-            minW: 2,
-            maxH: 8,
+            w: 6,
+            h: 1,
+            minH: 1,
+            minW: 6,
+            maxH: 1,
             maxW: 6,
+            isResizable: false,
           });
         }}
       >
-        <Link2 size={24} />
-        <p className="w-[55px] text-left">URL</p>
+        <Minus size={24} />
+        <p className="w-[55px] text-left">Divider</p>
       </button>
     </div>
   );

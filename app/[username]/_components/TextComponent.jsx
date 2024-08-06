@@ -3,12 +3,15 @@ import React from "react";
 const TextComponent = ({ data }) => {
   return (
     <div
-      className={`w-full h-full rounded-[25px] p-4 flex flex-col gap-3 overflow-hidden ${data?.color || 'bg-base-300'}`}
+      className={`w-full h-full rounded-[25px] p-4 flex flex-col gap-3 overflow-hidden ${
+        data?.color || "bg-base-300"
+      }`}
     >
       {data?.titleVisible && (
         <h3
           className={`text-base font-bold px-3 h-8 line-clamp-1 text-ellipsis ${
-            data?.color && (data?.color === "bg-accent"
+            data?.color &&
+            (data?.color === "bg-accent"
               ? "text-primary-content"
               : "text-" + data?.color.split("-")[1] + "-content")
           }`}
@@ -17,8 +20,9 @@ const TextComponent = ({ data }) => {
         </h3>
       )}
       <p
-        className={`text-sm font-medium px-3 flex-1 leading-tight whitespace-pre-wrap ${
-          data?.color && (data?.color === "bg-accent"
+        className={`text-sm font-medium px-3 flex-1 leading-tight whitespace-pre-wrap overflow-auto scrollbar-hidden ${
+          data?.color &&
+          (data?.color === "bg-accent"
             ? "text-primary-content"
             : "text-" + data?.color.split("-")[1] + "-content")
         }`}
