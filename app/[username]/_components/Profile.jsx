@@ -29,7 +29,7 @@ const Profile = ({ name, bio, image, socialLinks }) => {
             )}
           </div>
         </div>
-        <div className="flex flex-[3] flex-col justify-center">
+        <div className="flex flex-[4] flex-col justify-center">
           <p
             className={`text-[28px] font-normal font-poppins tracking-tighter lg:text-2xl lg:py-2`}
           >

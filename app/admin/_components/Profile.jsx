@@ -187,7 +187,7 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="flex flex-[3] flex-col justify-center">
+        <div className="flex flex-[4] flex-col justify-center">
           <input
             type="text"
             className={`input input-ghost rounded-lg p-0 text-[28px] bg-base-300 hover:bg-base-content/20 focus:outline-none font-normal font-poppins tracking-tighter max-w-[500px] ${

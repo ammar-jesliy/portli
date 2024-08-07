@@ -31,7 +31,11 @@ const Hero = () => {
       <div className="w-full max-w-[1000px] aspect-[1.6/1] border border-black/10 rounded-[38px] flex items-center justify-center p-[10px]">
         <div className="w-full h-full rounded-[28px] border border-black/10 p-2 bg-black/5">
           <div className="w-full h-full rounded-[20px] border bg-white shadow-lg overflow-hidden">
-            <img src="./hero-demo.png" alt="" className="w-full, h-full object-cover" />
+            <img
+              src="./hero-demo.png"
+              alt="Demo Image"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>
