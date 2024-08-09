@@ -2,7 +2,7 @@
 
 import { useState, useContext, useEffect } from "react";
 import ComponentMenuBar from "./ComponentMenuBar";
-import { Move, Pencil, Trash, Image as ImageIcon } from "lucide-react";
+import { Move, Pencil, Trash, Image as ImageIcon, X, Plus } from "lucide-react";
 import { AdminContext } from "../../_context/AdminContext";
 import { ref, uploadBytes, deleteObject } from "firebase/storage";
 import { storage } from "../../../utils/firebaseConfig";
@@ -19,9 +19,16 @@ const ImageComponent = ({ id, remove }) => {
   // const [image, setImage] = useState();
   const [isDragging, setIsDragging] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [labelVisible, setLabelVisible] = useState(false);
+  const [label, setLabel] = useState("");
 
   const { userDetails, componentData, updateComponentData } =
     useContext(AdminContext);
+
+  useEffect(() => {
+    setLabelVisible(componentData[id]?.labelVisible || false);
+    setLabel(componentData[id]?.label || "");
+  }, [componentData, id]);
 
   useEffect(() => {
     getImage();
@@ -66,7 +73,11 @@ const ImageComponent = ({ id, remove }) => {
       "." +
       file.type.split("/")[1];
 
-    const data = { filename: filename };
+    const data = {
+      filename: filename,
+      labelVisible: labelVisible,
+      label: label,
+    };
 
     const storageRef = ref(storage, filename);
 
@@ -83,6 +94,53 @@ const ImageComponent = ({ id, remove }) => {
         updateComponentData(id, { filename });
       }
     });
+  };
+
+  const handleLabelInput = (e) => {
+    setLabel(e.target.value);
+    const chars = e.target.value.length + 6;
+    e.target.style.width = chars + "ch";
+  };
+
+  const saveLabelToDb = async (label) => {
+    const data = {
+      filename: componentData[id]?.filename,
+      labelVisible: componentData[id]?.labelVisible,
+      label: label,
+    };
+
+    const result = await db
+      .update(components)
+      .set({ data: JSON.stringify(data) })
+      .where(eq(components.componentId, id));
+
+    if (result) {
+      updateComponentData(id, { label });
+      console.log("saved label");
+    }
+  };
+
+  const handleLabelVisibility = async (labelVisible) => {
+
+
+    const data = {
+      filename: componentData[id]?.filename,
+      labelVisible: labelVisible,
+      label: "",
+    };
+
+    const result = await db
+      .update(components)
+      .set({ data: JSON.stringify(data) })
+      .where(eq(components.componentId, id));
+
+    if (result) {
+      setLabel("")
+      setLabelVisible(labelVisible);
+      updateComponentData(id, { labelVisible, label: "" });
+    } else {
+      console.log("Error changing label visibilty")
+    }
   };
 
   return (
@@ -134,13 +192,46 @@ const ImageComponent = ({ id, remove }) => {
         onChange={handleFileUpload}
       />
       {componentData[id]?.filename && (
-        <Image
-          src={BASE_URL + componentData[id]?.filename.replace("/", "%2f") + "?alt=media"}
-          alt="Image"
-          fill
-          className="rounded-[25px] object-cover"
-          unoptimized={true}
-        />
+        <>
+          <Image
+            src={
+              BASE_URL +
+              componentData[id]?.filename.replace("/", "%2f") +
+              "?alt=media"
+            }
+            alt="Image"
+            fill
+            className="rounded-[25px] object-cover"
+            unoptimized={true}
+          />
+          <div className="absolute left-4 bottom-4 flex items-center gap-1 w-full">
+            {labelVisible ? (
+              <>
+                <input
+                  type="text"
+                  value={label}
+                  placeholder="Caption..."
+                  className="h-6 px-3 rounded-full text-xs font-semibold w-20 min-w-20 max-w-[55%]"
+                  onChange={(e) => handleLabelInput(e)}
+                  onBlur={(e) => saveLabelToDb(e.target.value)}
+                />
+                <button
+                  className="w-6 h-6 bg-white items-center justify-center hidden group-hover:flex btn-warning rounded-full"
+                  onClick={() => handleLabelVisibility(false)}
+                >
+                  <Trash size={14} className="text-red-600" />
+                </button>
+              </>
+            ) : (
+              <button
+                className="w-6 h-6 bg-white items-center justify-center hidden group-hover:flex btn-warning rounded-full"
+                onClick={() => handleLabelVisibility(true)}
+              >
+                <Plus size={14} className="text-black" />
+              </button>
+            )}
+          </div>
+        </>
       )}
     </div>
   );
