@@ -120,7 +120,7 @@ const UrlComponent = ({ id, remove }) => {
 
   return (
     <div
-      className={`w-full h-full rounded-[25px] flex justify-center items-center ${
+      className={`w-full h-full rounded-[25px] flex justify-center items-center transition-colors duration-300 ${
         componentData[id]?.color || "bg-base-300"
       } group`}
     >
@@ -129,45 +129,81 @@ const UrlComponent = ({ id, remove }) => {
         subMenuVisible={colorMenuVisible || modalVisible}
       >
         <div
-          className={`absolute w-full h-full left-0 top-0 -translate-x-[120%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden flex flex-col items-center justify-around shadow ${
+          className={`absolute w-max -left-[10px] top-1/2 -translate-y-1/2 -translate-x-[100%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden grid grid-cols-3 shadow p-1 ${
             !colorMenuVisible && "hidden"
           }`}
         >
           <button
-            className="btn btn-xs btn-ghost px-2"
+            className="p-1"
             onClick={() => {
               setColorMenuVisible(false);
               componentData[id] && handleChangeColor("bg-primary");
             }}
           >
-            <div className="h-4 w-7 rounded-lg bg-primary"></div>
+            <div className="h-5 w-5 rounded-full bg-primary"></div>
           </button>
           <button
-            className="btn btn-xs btn-ghost px-2"
+            className="p-1"
             onClick={() => {
               setColorMenuVisible(false);
               componentData[id] && handleChangeColor("bg-secondary");
             }}
           >
-            <div className="h-4 w-7 rounded-lg bg-secondary"></div>
+            <div className="h-5 w-5 rounded-full bg-secondary"></div>
           </button>
           <button
-            className="btn btn-xs btn-ghost px-2"
+            className="p-1"
             onClick={() => {
               setColorMenuVisible(false);
               componentData[id] && handleChangeColor("bg-accent");
             }}
           >
-            <div className="h-4 w-7 rounded-lg bg-accent"></div>
+            <div className="h-5 w-5 rounded-full bg-accent"></div>
           </button>
           <button
-            className="btn btn-xs btn-ghost px-2"
+            className="p-1"
             onClick={() => {
               setColorMenuVisible(false);
               componentData[id] && handleChangeColor("bg-base-300");
             }}
           >
-            <div className="h-4 w-7 rounded-lg bg-base-300"></div>
+            <div className="h-5 w-5 rounded-full bg-base-300"></div>
+          </button>
+          <button
+            className="p-1"
+            onClick={() => {
+              setColorMenuVisible(false);
+              componentData[id] && handleChangeColor("bg-error");
+            }}
+          >
+            <div className="h-5 w-5 rounded-full bg-error"></div>
+          </button>
+          <button
+            className="p-1"
+            onClick={() => {
+              setColorMenuVisible(false);
+              componentData[id] && handleChangeColor("bg-info");
+            }}
+          >
+            <div className="h-5 w-5 rounded-full bg-info"></div>
+          </button>
+          <button
+            className="p-1"
+            onClick={() => {
+              setColorMenuVisible(false);
+              componentData[id] && handleChangeColor("bg-success");
+            }}
+          >
+            <div className="h-5 w-5 rounded-full bg-success"></div>
+          </button>
+          <button
+            className="p-1"
+            onClick={() => {
+              setColorMenuVisible(false);
+              componentData[id] && handleChangeColor("bg-neutral");
+            }}
+          >
+            <div className="h-5 w-5 rounded-full bg-neutral"></div>
           </button>
         </div>
         <button
