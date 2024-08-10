@@ -107,6 +107,7 @@ const ImageComponent = ({ id, remove }) => {
       filename: componentData[id]?.filename,
       labelVisible: componentData[id]?.labelVisible,
       label: label,
+      labelWidth: label.length
     };
 
     const result = await db
@@ -115,7 +116,7 @@ const ImageComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      updateComponentData(id, { label });
+      updateComponentData(id, { label, labelWidth: label.length });
       console.log("saved label");
     }
   };
@@ -127,6 +128,7 @@ const ImageComponent = ({ id, remove }) => {
       filename: componentData[id]?.filename,
       labelVisible: labelVisible,
       label: "",
+      labelWidth: 0
     };
 
     const result = await db
@@ -137,7 +139,7 @@ const ImageComponent = ({ id, remove }) => {
     if (result) {
       setLabel("")
       setLabelVisible(labelVisible);
-      updateComponentData(id, { labelVisible, label: "" });
+      updateComponentData(id, { labelVisible, label: "", labelWidth: 0 });
     } else {
       console.log("Error changing label visibilty")
     }
@@ -200,6 +202,7 @@ const ImageComponent = ({ id, remove }) => {
               "?alt=media"
             }
             alt="Image"
+            id={id}
             fill
             className="rounded-[25px] object-cover"
             unoptimized={true}
@@ -211,7 +214,8 @@ const ImageComponent = ({ id, remove }) => {
                   type="text"
                   value={label}
                   placeholder="Caption..."
-                  className="h-6 px-3 rounded-full text-xs font-semibold w-20 min-w-20 max-w-[55%]"
+                  className="h-6 px-3 rounded-full text-xs font-semibold  min-w-20 max-w-[55%]"
+                  style={{ width: (componentData[id]?.labelWidth + 6) + "ch" }}
                   onChange={(e) => handleLabelInput(e)}
                   onBlur={(e) => saveLabelToDb(e.target.value)}
                 />
@@ -219,15 +223,16 @@ const ImageComponent = ({ id, remove }) => {
                   className="w-6 h-6 bg-white items-center justify-center hidden group-hover:flex btn-warning rounded-full"
                   onClick={() => handleLabelVisibility(false)}
                 >
-                  <Trash size={14} className="text-red-600" />
+                  <Trash size={12} className="text-red-600" />
                 </button>
               </>
             ) : (
               <button
-                className="w-6 h-6 bg-white items-center justify-center hidden group-hover:flex btn-warning rounded-full"
+                className="w-6 h-6 bg-white items-center justify-center hidden group-hover:flex btn-warning rounded-full tooltip tooltip-top"
                 onClick={() => handleLabelVisibility(true)}
+                data-tip="Add Caption"
               >
-                <Plus size={14} className="text-black" />
+                <Plus size={12} strokeWidth={4} className="text-black"  />
               </button>
             )}
           </div>

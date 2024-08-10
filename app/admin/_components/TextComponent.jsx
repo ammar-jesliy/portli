@@ -267,7 +267,7 @@ const TextComponent = ({ id, remove }) => {
             onClick={() => handleDeleteTitle()}
             data-tip="Remove Title"
           >
-            <X size={12} />
+            <X size={12} strokeWidth={4} />
           </button>
 
           <input
