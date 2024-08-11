@@ -106,8 +106,8 @@ const ImageComponent = ({ id, remove }) => {
     const data = {
       filename: componentData[id]?.filename,
       labelVisible: componentData[id]?.labelVisible,
-      label: label,
-      labelWidth: label.length
+      label: label.trim(),
+      labelWidth: label.trim().length,
     };
 
     const result = await db
@@ -116,19 +116,20 @@ const ImageComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      updateComponentData(id, { label, labelWidth: label.length });
+      updateComponentData(id, {
+        label: label.trim(),
+        labelWidth: label.length,
+      });
       console.log("saved label");
     }
   };
 
   const handleLabelVisibility = async (labelVisible) => {
-
-
     const data = {
       filename: componentData[id]?.filename,
       labelVisible: labelVisible,
       label: "",
-      labelWidth: 0
+      labelWidth: 0,
     };
 
     const result = await db
@@ -137,11 +138,11 @@ const ImageComponent = ({ id, remove }) => {
       .where(eq(components.componentId, id));
 
     if (result) {
-      setLabel("")
+      setLabel("");
       setLabelVisible(labelVisible);
       updateComponentData(id, { labelVisible, label: "", labelWidth: 0 });
     } else {
-      console.log("Error changing label visibilty")
+      console.log("Error changing label visibilty");
     }
   };
 
@@ -214,8 +215,8 @@ const ImageComponent = ({ id, remove }) => {
                   type="text"
                   value={label}
                   placeholder="Caption..."
-                  className="h-6 px-3 rounded-full text-xs font-semibold  min-w-20 max-w-[55%]"
-                  style={{ width: (componentData[id]?.labelWidth + 6) + "ch" }}
+                  className="h-6 px-3 rounded-full text-xs font-semibold  min-w-20 max-w-[calc(100%-80px)]"
+                  style={{ width: componentData[id]?.labelWidth + 6 + "ch" }}
                   onChange={(e) => handleLabelInput(e)}
                   onBlur={(e) => saveLabelToDb(e.target.value)}
                 />
@@ -232,7 +233,7 @@ const ImageComponent = ({ id, remove }) => {
                 onClick={() => handleLabelVisibility(true)}
                 data-tip="Add Caption"
               >
-                <Plus size={12} strokeWidth={4} className="text-black"  />
+                <Plus size={12} strokeWidth={4} className="text-black" />
               </button>
             )}
           </div>
