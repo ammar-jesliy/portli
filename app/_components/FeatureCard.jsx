@@ -10,7 +10,7 @@ const FeatureCard = ({ title, highlightedText, text, image, icon }) => {
           {title}
         </h3>
       </div>
-      <div className="mx-auto w-[80%] aspect-[1.8/1] rounded-2xl overflow-hidden relative">
+      <div className="mx-auto w-[80%] aspect-[1.8/1] rounded-t-2xl overflow-hidden relative">
         {image}
         <div className="absolute top-0 w-full h-full bg-gradient-to-b from-white/0 to-[#d7dcff] via-white/0 z-10"></div>
       </div>
