@@ -23,6 +23,7 @@ const Features = () => {
             " Tailor each element to fit your style—change colors, sizes, and layouts effortlessly."
           }
           icon={<Puzzle className="w-5 h-5 sm:w-10 sm:h-10" />}
+          image={<img src="./Customizable-Components.png" alt="Feature" />}
         />
         <FeatureCard
           title={"Page Analytics"}
@@ -53,6 +54,7 @@ const Features = () => {
             " This allows you to fine-tune your site’s design for each device, ensuring your page functions smoothly across all screens."
           }
           icon={<MonitorSmartphone className="w-5 h-5 sm:w-10 sm:h-10" />}
+          image={<video src="./portli-responsiveness-demo.mp4" loop autoPlay muted className="w-full h-full object-cover" />}
         />
       </div>
     </section>
