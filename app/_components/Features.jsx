@@ -1,6 +1,6 @@
 import React from "react";
 import FeatureCard from "./FeatureCard";
-import { Puzzle, LayoutTemplate, MonitorSmartphone, BarChart } from "lucide-react";
+import { Puzzle, LayoutTemplate, MonitorSmartphone, BarChart, Palette } from "lucide-react";
 
 const Features = () => {
   return (
@@ -17,7 +17,7 @@ const Features = () => {
         <FeatureCard
           title={"Customizable components"}
           highlightedText={
-            "Elevate your mircrosite with customizable components."
+            "Build your mircrosite with customizable components."
           }
           text={
             " Tailor each element to fit your style—change colors, sizes, and layouts effortlessly."
@@ -26,6 +26,18 @@ const Features = () => {
           image={<img src="./Customizable-Components.png" alt="Feature" />}
         />
         <FeatureCard
+          title={"Theme Variety"}
+          highlightedText={
+            "Personalize your microsite with a wide range of themes."
+          }
+          text={
+            " Choose from an array of styles to match your brand's identity—switch between light, dark, and vibrant palettes with ease."
+          }
+          icon={<Palette className="w-5 h-5 sm:w-10 sm:h-10" />}
+          image={<img src="./Themes.jpg" alt="Feature" />}
+        />
+
+        {/* <FeatureCard
           title={"Page Analytics"}
           highlightedText={
             "Track Views and Clicks with our Analytics tool."
@@ -44,7 +56,8 @@ const Features = () => {
             " Select a design that suits your style, personalize it to your liking, and have a stunning page ready in minutes."
           }
           icon={<LayoutTemplate className="w-5 h-5 sm:w-10 sm:h-10" />}
-        />
+        /> */}
+
         <FeatureCard
           title={"Optimized for Any Device"}
           highlightedText={
