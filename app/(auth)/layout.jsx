@@ -13,7 +13,8 @@ const authLayout = ({ children }) => {
           {children}
         </div>
       </div>
-      <div className=" hidden bg-gray-400 lg:flex lg:flex-[6]">
+      <div className=" hidden bg-gray-400 m-2 overflow-hidden rounded-2xl lg:flex lg:flex-[6]">
+        <img src="./auth-design.jpg" alt="" className="object-cover" />
       </div>
     </div>
   );
