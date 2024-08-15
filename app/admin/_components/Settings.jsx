@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { storage } from "../../../utils/firebaseConfig";
 import { deleteObject, getStorage, listAll, ref } from "firebase/storage";
+import { motion } from "framer-motion";
 
 const Settings = () => {
   const { user } = useUser();
@@ -85,7 +86,18 @@ const Settings = () => {
 
   return (
     <>
-      <div className="absolute px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 animate-slide-up z-[-1] scrollbar-hidden">
+      <motion.div
+        className="absolute px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 z-[-1] scrollbar-hidden"
+        initial={{ opacity: 0, y: "-70%" }}
+        animate={{ opacity: 1, y: "-100%" }}
+        exit={{ opacity: 0, y: "-70%" }}
+        transition={{
+          duration: 0.2,
+          type: "spring",
+          stiffness: 700,
+          damping: 30,
+        }}
+      >
         <div className="w-full h-full flex flex-col gap-5 justify-between">
           <div className="flex items-center gap-4 py-2 px-5">
             <img
@@ -149,7 +161,7 @@ const Settings = () => {
             </SignOutButton>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

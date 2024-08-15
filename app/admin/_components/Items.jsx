@@ -8,10 +8,22 @@ import {
   Link2,
   Minus,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Items = ({ onItemClick }) => {
   return (
-    <div className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 gap-1 animate-slide-up">
+    <motion.div
+      className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 gap-1 -z-10"
+      initial={{ opacity: 0, y: "-50%" }}
+      animate={{ opacity: 1, y: "-100%" }}
+      exit={{ opacity: 0, y: "-50%" }}
+      transition={{
+        duration: 0.2,
+        type: "spring",
+        stiffness: 700,
+        damping: 30,
+      }}
+    >
       <button
         className="btn btn-ghost px-2 justify-start"
         onClick={() => {
@@ -142,7 +154,7 @@ const Items = ({ onItemClick }) => {
         <Minus size={24} />
         <p className="w-[55px] text-left">Divider</p>
       </button>
-    </div>
+    </motion.div>
   );
 };
 

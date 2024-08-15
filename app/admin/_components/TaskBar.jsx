@@ -19,6 +19,7 @@ import Items from "./Items";
 import Settings from "./Settings";
 import { AdminContext } from "../../_context/AdminContext";
 import { toast } from "react-toastify";
+import { AnimatePresence, motion } from "framer-motion";
 
 const TaskBar = () => {
   const [showItems, setShowItems] = useState(false);
@@ -50,12 +51,23 @@ const TaskBar = () => {
   };
 
   return (
-    <div className="flex items-center fixed bottom-7 h-[60px] w-max bg-base-100 left-1/2 translate-x-[-50%] rounded-2xl shadow-[0px_5px_9px_0px_rgba(0,0,0,0.25)] border-1 border-base-300 sm:px-5 px-[10px] sm:gap-1 gap-1 z-10">
-      {showItems && <Items onItemClick={addComponent} />}
+    <motion.div
+      className="flex items-center fixed bottom-7 h-[60px] w-max bg-base-100 rounded-2xl left-0 right-0 mx-auto shadow-[0px_5px_9px_0px_rgba(0,0,0,0.25)] border-1 border-base-300 sm:px-5 px-[10px] sm:gap-1 gap-1 z-10"
+      layout
+      transition={{
+        duration: 0.1,
+        type: "spring",
+        stiffness: 700,
+        damping: 30,
+      }}
+    >
+      <AnimatePresence>
+        {showItems && <Items onItemClick={addComponent} />}
+      </AnimatePresence>
 
-      {showThemes && <Themes />}
+      <AnimatePresence>{showThemes && <Themes />}</AnimatePresence>
 
-      {showSettings && <Settings />}
+      <AnimatePresence>{showSettings && <Settings />}</AnimatePresence>
 
       {pathname === "/admin" ? (
         <>
@@ -173,11 +185,13 @@ const TaskBar = () => {
       </button>
 
       <button
-        className={`rounded-full w-7 h-7 flex items-center justify-center hover:opacity-90 ${showSettings && 'bg-black'}`}
+        className={`rounded-full w-7 h-7 flex items-center justify-center hover:opacity-90 ${
+          showSettings && "bg-black"
+        }`}
         onClick={() => {
-          setShowSettings(!showSettings)
-          setShowItems(false)
-          setShowThemes(false)
+          setShowSettings(!showSettings);
+          setShowItems(false);
+          setShowThemes(false);
         }}
       >
         {showSettings ? (
@@ -192,7 +206,7 @@ const TaskBar = () => {
       </button>
 
       {/* <UserButton /> */}
-    </div>
+    </motion.div>
   );
 };
 
