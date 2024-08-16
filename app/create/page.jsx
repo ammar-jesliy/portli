@@ -81,22 +81,22 @@ const createPage = () => {
 
   return (
     <>
-      <div className="w-screen h-screen flex items-center justify-center font-poppins">
+      <div className="w-screen h-screen flex items-center justify-center font-poppins overflow-hidden">
         <div className="flex items-center flex-col gap-14 px-5 pb-8">
           <div className="flex flex-col items-center gap-4">
             <h4 className="text-xl font-semibold tracking-tight text-center leading-9">
               First, let’s choose a name for your site
             </h4>
-            <p className="text-md font-normal text-gray-500 tracking-tight text-center leading-snug">
-              Pick a name that represents you or your brand.
+            <p className="text-base font-light text-gray-500 tracking-tight text-center leading-snug">
+              Pick a name that represents you or your brand to create a unique URL.
             </p>
           </div>
           <div className="flex gap-2">
-            <label className="input flex items-center gap-[2px] bg-base-300 min-w-52 max-w-80 w-[70vw]">
-              portli.me/
+            <label className="input flex items-center gap-[2px] bg-base-300 min-w-52 max-w-80 w-[70vw] text-sm">
+              portli.vercel.app/
               <input
                 type="text"
-                className="grow"
+                className="w-1/2"
                 placeholder="site-name"
                 spellCheck="false"
                 onChange={(e) => setSitename(e.target.value)}
