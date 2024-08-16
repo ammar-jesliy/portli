@@ -8,6 +8,7 @@ import { db } from "../../../utils";
 import { components } from "../../../utils/schema";
 import { eq } from "drizzle-orm";
 import { AdminContext } from "../../_context/AdminContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 const UrlComponent = ({ id, remove }) => {
   const [url, setUrl] = useState("");
@@ -128,84 +129,95 @@ const UrlComponent = ({ id, remove }) => {
         orientation={"vertical"}
         subMenuVisible={colorMenuVisible || modalVisible}
       >
-        <div
-          className={`absolute w-max -left-[10px] top-1/2 -translate-y-1/2 -translate-x-[100%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden grid grid-cols-3 shadow p-1 ${
-            !colorMenuVisible && "hidden"
-          }`}
-        >
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-primary");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-primary"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-secondary");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-secondary"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-accent");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-accent"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-base-300");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-base-300"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-error");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-error"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-info");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-info"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-success");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-success"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              componentData[id] && handleChangeColor("bg-neutral");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-neutral"></div>
-          </button>
-        </div>
+        <AnimatePresence>
+          {colorMenuVisible && (
+            <motion.div
+              className={`absolute w-max -left-[10px] top-1/2 -translate-y-1/2 -translate-x-[100%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden grid grid-cols-3 shadow p-1`}
+              initial={{ opacity: 0, x: "-70%", y: "-50%" }}
+              animate={{ opacity: 1, x: "-100%", y: "-50%" }}
+              exit={{ opacity: 0, x: "-70%", y: "-50%" }}
+              transition={{
+                duration: 0.2,
+                type: "spring",
+                stiffness: 700,
+                damping: 30,
+              }}
+            >
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-primary");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-primary"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-secondary");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-secondary"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-accent");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-accent"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-base-300");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-base-300"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-error");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-error"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-info");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-info"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-success");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-success"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  componentData[id] && handleChangeColor("bg-neutral");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-neutral"></div>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <button
           className={`btn btn-sm btn-ghost px-2 drag-handle text-gray-800 ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
@@ -248,18 +260,20 @@ const UrlComponent = ({ id, remove }) => {
           className="btn btn-sm btn-ghost px-2 text-red-600"
           onClick={() => {
             setModalVisible(!modalVisible);
-            setColorMenuVisible(false)
+            setColorMenuVisible(false);
           }}
         >
           <Trash size={16} />
         </button>
-        {modalVisible && (
-          <DeleteComponentModal
-            setModalVisible={setModalVisible}
-            id={id}
-            remove={remove}
-          />
-        )}
+        <AnimatePresence>
+          {modalVisible && (
+            <DeleteComponentModal
+              setModalVisible={setModalVisible}
+              id={id}
+              remove={remove}
+            />
+          )}
+        </AnimatePresence>
       </ComponentMenuBar>
       {componentData[id] &&
         (Object.keys(componentData[id]).length === 0 ||

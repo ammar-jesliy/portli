@@ -8,6 +8,7 @@ import { components } from "../../../utils/schema";
 import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
 import { AdminContext } from "../../_context/AdminContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 const TextComponent = ({ id, remove }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -128,87 +129,98 @@ const TextComponent = ({ id, remove }) => {
         orientation={"vertical"}
         subMenuVisible={colorMenuVisible || modalVisible}
       >
-        <div
-          className={`absolute w-max -left-[10px] top-1/2 -translate-y-1/2 -translate-x-[100%] rounded-[10px] bg-white overflow-y-auto scrollbar-hidden grid grid-cols-3 shadow p-1 ${
-            !colorMenuVisible && "hidden"
-          }`}
-        >
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-primary");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-primary"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-secondary");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-secondary"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-accent");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-accent"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-base-300");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-base-300"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-error");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-error"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-info");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-info"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-success");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-success"></div>
-          </button>
-          <button
-            className="p-1"
-            onClick={() => {
-              setColorMenuVisible(false);
-              handleChangeColor("bg-neutral");
-            }}
-          >
-            <div className="h-5 w-5 rounded-full bg-neutral"></div>
-          </button>
-          {/* <div className="color-container w-5 h-5 flex items-center justify-center m-1 rounded-full bg-black">
+        <AnimatePresence>
+          {colorMenuVisible && (
+            <motion.div
+              className={`absolute w-max -left-[10px] top-1/2 rounded-[10px] bg-white overflow-y-auto scrollbar-hidden grid grid-cols-3 shadow p-1`}
+              initial={{ opacity: 0, x: "-70%", y: "-50%" }}
+              animate={{ opacity: 1, x: "-100%", y: "-50%" }}
+              exit={{ opacity: 0, x: "-70%", y: "-50%" }}
+              transition={{
+                duration: 0.2,
+                type: "spring",
+                stiffness: 700,
+                damping: 30,
+              }}
+            >
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-primary");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-primary"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-secondary");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-secondary"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-accent");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-accent"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-base-300");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-base-300"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-error");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-error"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-info");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-info"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-success");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-success"></div>
+              </button>
+              <button
+                className="p-1"
+                onClick={() => {
+                  setColorMenuVisible(false);
+                  handleChangeColor("bg-neutral");
+                }}
+              >
+                <div className="h-5 w-5 rounded-full bg-neutral"></div>
+              </button>
+              {/* <div className="color-container w-5 h-5 flex items-center justify-center m-1 rounded-full bg-black">
             <input type="color" name="" id="" className="color-picker" />
           </div> */}
-        </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <button
           className={`btn btn-sm btn-ghost drag-handle px-2 text-gray-800 ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
@@ -226,7 +238,7 @@ const TextComponent = ({ id, remove }) => {
           }}
         >
           {colorMenuVisible ? (
-            <X size={16}  className="text-gray-800"/>
+            <X size={16} className="text-gray-800" />
           ) : (
             <div
               className={`h-4 w-4 rounded-full ${
@@ -245,13 +257,15 @@ const TextComponent = ({ id, remove }) => {
         >
           <Trash size={16} />
         </button>
-        {modalVisible && (
-          <DeleteComponentModal
-            setModalVisible={setModalVisible}
-            id={id}
-            remove={remove}
-          />
-        )}
+        <AnimatePresence>
+          {modalVisible && (
+            <DeleteComponentModal
+              setModalVisible={setModalVisible}
+              id={id}
+              remove={remove}
+            />
+          )}
+        </AnimatePresence>
       </ComponentMenuBar>
 
       {(componentData[id]?.titleVisible || !componentData[id]) && (
@@ -278,7 +292,6 @@ const TextComponent = ({ id, remove }) => {
           >
             <X size={12} strokeWidth={4} />
           </button>
-
         </div>
       )}
 

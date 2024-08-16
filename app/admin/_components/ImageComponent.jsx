@@ -12,6 +12,7 @@ import { db } from "../../../utils";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import DeleteComponentModal from "./DeleteComponentModal";
+import { AnimatePresence } from "framer-motion";
 
 const ImageComponent = ({ id, remove }) => {
   const BASE_URL = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BASE_URL;
@@ -171,14 +172,16 @@ const ImageComponent = ({ id, remove }) => {
         >
           <Trash size={16} />
         </button>
-        {modalVisible && (
-          <DeleteComponentModal
-            setModalVisible={setModalVisible}
-            id={id}
-            remove={remove}
-            image={componentData[id]?.filename}
-          />
-        )}
+        <AnimatePresence>
+          {modalVisible && (
+            <DeleteComponentModal
+              setModalVisible={setModalVisible}
+              id={id}
+              remove={remove}
+              image={componentData[id]?.filename}
+            />
+          )}
+        </AnimatePresence>
       </ComponentMenuBar>
       {!componentData[id]?.filename && (
         <label htmlFor={id + "Upload"} className="btn btn-primary shadow">
