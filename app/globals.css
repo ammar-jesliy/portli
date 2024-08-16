@@ -83,3 +83,7 @@
   border-radius: 50%;
   border: none;
 }
+
+.text-title:hover .remove-text-title, .text-title-input:focus + .remove-text-title {
+  display: flex;
+}

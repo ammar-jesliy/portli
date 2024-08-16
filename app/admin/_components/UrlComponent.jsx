@@ -265,7 +265,7 @@ const UrlComponent = ({ id, remove }) => {
         (Object.keys(componentData[id]).length === 0 ||
         componentData[id] === undefined ? (
           <div className="flex flex-col items-center justify-center gap-3">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="flex items-center">
               <input
                 type="text"
                 value={url}

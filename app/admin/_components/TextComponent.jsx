@@ -256,20 +256,12 @@ const TextComponent = ({ id, remove }) => {
 
       {(componentData[id]?.titleVisible || !componentData[id]) && (
         <div
-          className={`w-full hover:bg-base-content/20 rounded-[9px] relative ${
+          className={`w-full hover:bg-base-content/20 rounded-[9px] relative text-title ${
             componentData[id]?.color === "bg-accent"
               ? "text-primary-content"
               : "text-" + componentData[id]?.color?.split("-")[1] + "-content"
           }`}
         >
-          <button
-            className="w-6 h-6 items-center justify-center border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-[-10px] top-[-10px] rounded-full hidden group-hover:flex"
-            onClick={() => handleDeleteTitle()}
-            data-tip="Remove Title"
-          >
-            <X size={12} strokeWidth={4} />
-          </button>
-
           <input
             type="text"
             placeholder="Add title..."
@@ -277,8 +269,16 @@ const TextComponent = ({ id, remove }) => {
             value={localTitle}
             onChange={(e) => setLocalTitle(e.target.value)}
             onBlur={(e) => handleTitleInput(e.target.value)}
-            className={`input input-sm w-full focus:outline-none bg-transparent text-base font-bold`}
+            className={`input input-sm w-full focus:outline-none bg-transparent text-base font-bold text-title-input`}
           />
+          <button
+            className="w-6 h-6 items-center justify-center border-none bg-white/75 hover:bg-white tooltip tooltip-top text-warning absolute left-[-10px] top-[-10px] rounded-full hidden remove-text-title"
+            onClick={() => handleDeleteTitle()}
+            data-tip="Remove Title"
+          >
+            <X size={12} strokeWidth={4} />
+          </button>
+
         </div>
       )}
 
