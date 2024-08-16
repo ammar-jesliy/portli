@@ -225,7 +225,7 @@ const UrlComponent = ({ id, remove }) => {
               }}
             >
               {colorMenuVisible ? (
-                <X size={16} />
+                <X size={16} className="text-gray-800" />
               ) : (
                 <div
                   className={`h-4 w-4 rounded-full ${
@@ -239,7 +239,7 @@ const UrlComponent = ({ id, remove }) => {
               target="_blank"
               className="btn btn-sm btn-ghost px-2"
             >
-              <ExternalLink size={16} />
+              <ExternalLink size={16} className="text-gray-800" />
             </a>
           </>
         )}

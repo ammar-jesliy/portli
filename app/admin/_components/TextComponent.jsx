@@ -226,7 +226,7 @@ const TextComponent = ({ id, remove }) => {
           }}
         >
           {colorMenuVisible ? (
-            <X size={16} />
+            <X size={16}  className="text-gray-800"/>
           ) : (
             <div
               className={`h-4 w-4 rounded-full ${
