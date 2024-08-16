@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 const Items = ({ onItemClick }) => {
   return (
     <motion.div
-      className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 gap-1 -z-10"
+      className="absolute grid grid-cols-2 lg:grid-cols-4 px-4 py-3 w-full bg-base-100/80 backdrop-blur-[10px] left-0 top-[-10px] translate-y-[-100%] rounded-2xl border border-base-300 gap-1 -z-10"
       initial={{ opacity: 0, y: "-50%" }}
       animate={{ opacity: 1, y: "-100%" }}
       exit={{ opacity: 0, y: "-50%" }}

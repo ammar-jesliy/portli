@@ -11,7 +11,7 @@ const Themes = () => {
 
   return (
     <motion.div
-      className="absolute grid grid-cols-2 lg:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100 left-0 top-[-10px] translate-y-[-100%] rounded-2xl border-1 border-base-300 z-[-10] scrollbar-hidden"
+      className="absolute grid grid-cols-2 lg:grid-cols-3 px-2 sm:px-4 py-3 w-full max-h-80 overflow-y-scroll bg-base-100/80 backdrop-blur-[10px] left-0 top-[-10px] translate-y-[-100%] rounded-2xl border border-base-300 z-[-10] scrollbar-hidden"
       initial={{ opacity: 0, y: "-80%" }}
       animate={{ opacity: 1, y: "-100%" }}
       exit={{ opacity: 0, y: "-80%" }}
