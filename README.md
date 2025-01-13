@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img src="public/portli-og-image.jpg" alt="Portli overview" style="border-radius: 30px;">
 
-## Getting Started
+---
 
-First, run the development server:
+# Portli
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Portli is a micro site or page builder that allows users to create visually appealing and professional pages with ease. It provides a variety of customizable elements such as text boxes, links, images, and titles to help you build your personal or professional web presence. You can showcase your site using the link provided by Portli. This link can be accessed by anyone.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Drag-and-Drop Interface**: Easily add and arrange elements on your page.
+- **Media Integration**: Embed images, videos, and links seamlessly.
+- **Responsive Design**: Ensure your page looks great on all devices.
+- **Shareable Link**: Showcase your site using a unique link that can be accessed by anyone.
+- **SEO Optimized**: Ensure your page is search engine friendly.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Coming Soon
 
-## Learn More
+We are constantly working to improve Portli. Here are some features that will be available soon:
 
-To learn more about Next.js, take a look at the following resources:
+- **Customizable Templates**: Choose from a variety of pre-designed templates to get started quickly.
+- **Advanced Analytics**: Gain insights into your page's performance with detailed analytics.
+- **Custom Domains**: Use your own domain name for a more personalized touch.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Showcase
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Here are some examples of what you can create with Portli:
 
-## Deploy on Vercel
+- **Personal Landing Page**: Introduce yourself with a clean and professional layout.
+  <img src="public/hero-demo.png" alt="Personal landing page" style="border-radius: 10px;">
+- **Project Portfolio**: Highlight your projects with detailed descriptions and media.
+- **Business Page**: Create a simple and effective online presence for your business.
+- **Event Page**: Share event details and allow visitors to RSVP.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Visit Our Site
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Check out Portli and start building your page today: [Portli Website](https://portli.vercel.app)
